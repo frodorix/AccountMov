@@ -1,0 +1,1 @@
+﻿dotnet ef dbcontext scaffold "Data Source=localhost;Initial Catalog=AccountMovs;Persist Security Info=True;User ID=sa;Password=yourStrongPassword#" Microsoft.EntityFrameworkCore.SqlServer --namespace com.frodorix.bank --context-dir Contexts --output-dir Entity/Accounts --data-annotations  --table Cliente --table Cuenta --table Movimientos
