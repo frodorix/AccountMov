@@ -24,6 +24,6 @@ namespace com.frodorix.bank
 
         [ForeignKey("NumeroCuenta")]
         [InverseProperty("Movimientos")]
-        public virtual Cuentum? NumeroCuentaNavigation { get; set; }
+        public virtual Cuenta? NumeroCuentaNavigation { get; set; }
     }
 }

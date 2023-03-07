@@ -13,6 +13,7 @@ namespace CORE.Account.Domain.Model
         public ETipoCuenta Tipo { get; internal set; }
         public decimal SaldoInicial { get; internal set; }
         public EstadoCuenta Estado { get; set; }
+        public int ClienteId { get; set; }
 
     }
 }

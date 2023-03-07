@@ -11,7 +11,7 @@ namespace com.frodorix.bank
     {
         public Cliente()
         {
-            Cuenta = new HashSet<Cuentum>();
+            Cuenta = new HashSet<Cuenta>();
         }
 
         [Key]
@@ -34,8 +34,9 @@ namespace com.frodorix.bank
         [Unicode(false)]
         public string Contrasena { get; set; } = null!;
         public int Estado { get; set; }
-
+        [Column("LimiteDiario", TypeName = "decimal(18, 2)")]
+        public decimal LimiteDiario { get; set; }
         [InverseProperty("Cliente")]
-        public virtual ICollection<Cuentum> Cuenta { get; set; }
+        public virtual ICollection<Cuenta> Cuenta { get; set; }
     }
 }

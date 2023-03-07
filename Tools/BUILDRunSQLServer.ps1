@@ -9,4 +9,4 @@ docker rmi --force $(docker images 'server-mssql' -q)
 docker build -t server-mssql MSSql\.
 
 #iniciar container
-docker run -d -p 1433:1433 server-mssql
+docker run -d -p 8433:1433 server-mssql

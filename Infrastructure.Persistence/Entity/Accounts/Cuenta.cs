@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace com.frodorix.bank
 {
-    public partial class Cuentum
+    public partial class Cuenta
     {
-        public Cuentum()
+        public Cuenta()
         {
             Movimientos = new HashSet<Movimiento>();
         }

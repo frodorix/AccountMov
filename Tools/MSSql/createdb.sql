@@ -12,11 +12,12 @@ CREATE TABLE [dbo].[Cliente](
 	[Nombre] [varchar](50) NOT NULL,
 	[Genero] [smallint] NOT NULL,
 	[Edad] [smallint] NOT NULL,
-	[Identificacion] [varchar](15) NOT NULL,
+	[Identificacion] [varchar](15)  NOT NULL UNIQUE,
 	[Direccion] [varchar](50) NOT NULL,
 	[Telefono] [varchar](20) NOT NULL,
 	[Contrasena] [varchar](50) NOT NULL,
 	[Estado] [int] NOT NULL,
+	[LimiteDiario] [decimal](18,2) default 1000
  CONSTRAINT [PK_Cliente] PRIMARY KEY CLUSTERED 
 (
 	[ClienteId] ASC

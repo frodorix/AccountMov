@@ -17,7 +17,7 @@ namespace com.frodorix.bank
         }
 
         public virtual DbSet<Cliente> Clientes { get; set; } = null!;
-        public virtual DbSet<Cuentum> Cuenta { get; set; } = null!;
+        public virtual DbSet<Cuenta> Cuenta { get; set; } = null!;
         public virtual DbSet<Movimiento> Movimientos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,7 +31,7 @@ namespace com.frodorix.bank
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Cuentum>(entity =>
+            modelBuilder.Entity<Cuenta>(entity =>
             {
                 entity.HasOne(d => d.Cliente)
                     .WithMany(p => p.Cuenta)

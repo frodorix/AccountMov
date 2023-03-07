@@ -2,7 +2,7 @@
 {
     public enum ETipoMovimiento
     {
-        Ingreso=1,
-        Egreso=0
+        Credito=1,
+        Debito=0
     }
 }
