@@ -9,35 +9,12 @@ namespace AccountMovAPI.Controllers
     public class ReportesController : ControllerBase
     {
         // GET: api/<ReportesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("estadocuenta/{id}/{inicio}/{fin}")]
+        public IEnumerable<string> GetEstadoCuenta(int id, DateTime inicio, DateTime fin)
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<ReportesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ReportesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ReportesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ReportesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

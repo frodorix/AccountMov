@@ -1,4 +1,5 @@
-﻿using CORE.Account.Domain.Enum;
+﻿using CORE.Account.Application.Interfaces;
+using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
 using CORE.Account.Interfaces;
@@ -10,13 +11,16 @@ using System.Threading.Tasks;
 
 namespace CORE.Account.Application
 {
-    internal class CuentasService
+    public  class CuentasService : ICuentasService
     {
-        
+
         private readonly ICuentasRepository cuentasRespository;
-  
-        public CuentasService(ICuentasRepository cuentasRespositor) {
-            this.cuentasRespository = cuentasRespository;
+        private readonly IMovimientosRepository movimientosRespository;
+
+        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository)
+        {
+            this.cuentasRespository = cuentasRespositor;
+            this.movimientosRespository = movimientosRespository;   
         }
         /// <summary>
         /// valida el estado de una cuenta
@@ -24,7 +28,7 @@ namespace CORE.Account.Application
         /// <param name="numeroCuenta"></param>
         /// <returns></returns>
         /// <exception cref="CuentaException"></exception>
-        private async Task<MCuenta> ValidarEstadoCuenta(int numeroCuenta)
+        private async Task<MCuenta?> ValidarEstadoCuenta(int numeroCuenta)
         {
             MCuenta cuenta = await this.cuentasRespository.ObtenerCuenta(numeroCuenta);
             #region validacion de estado de cuenta
@@ -52,10 +56,10 @@ namespace CORE.Account.Application
             var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
             var valorCredito = Math.Abs(valor);
             decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(numeroCuenta);
-            MMovimiento movimiento = await this.cuentasRespository.RegistrarMovimiento(cuenta.NumeroCuenta,fecha: DateTime.Now, ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
+            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: DateTime.Now, ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
             return movimiento;
         }
-           
+
         /// <summary>
         /// Si el saldo es 0 genera una excepcion de "Saldo no disponible".
         /// Al ser un DEBITO, el signo del valor es procesado internamente, siempre como negativo.
@@ -67,20 +71,20 @@ namespace CORE.Account.Application
         public async Task<MMovimiento> RegistrarDebito(int numeroCuenta, decimal valor)
         {
             var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
-            var valorDebito= Math.Abs(valor) * -1;
+            var valorDebito = Math.Abs(valor) * -1;
             decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(cuenta.NumeroCuenta);
             #region validacion de saldo
             if (saldoActual - valorDebito < 0)//no se debe permitr debito en saldo 0
             {
                 throw new CuentaException("Saldo no disponible");
             }
-            bool islimiteExcedido= await this.cuentasRespository.IsLimiteRetiroExedido(cuenta.NumeroCuenta,DateTime.Now);
+            bool islimiteExcedido = await this.cuentasRespository.IsLimiteRetiroExedido(cuenta.NumeroCuenta, DateTime.Now);
             if (islimiteExcedido)
             {
                 throw new CuentaException("Cupo diario Excedido");
             }
             #endregion
-            MMovimiento movimiento = await this.cuentasRespository.RegistrarMovimiento(cuenta.NumeroCuenta,fecha: DateTime.Now, ETipoMovimiento.Debito, valorDebito, saldoActual - valorDebito);
+            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: DateTime.Now, ETipoMovimiento.Debito, valorDebito, saldoActual - valorDebito);
             return movimiento;
         }
     }

@@ -9,6 +9,17 @@ namespace CORE.Account.Domain.Model
 {
     public class MCuenta
     {
+        private int? clienteId;
+        private int estado;
+
+        public MCuenta(int numeroCuenta, int? clienteId, decimal saldoInicial, int estado)
+        {
+            NumeroCuenta = numeroCuenta;
+            this.clienteId = clienteId;
+            SaldoInicial = saldoInicial;
+            this.estado = estado;
+        }
+
         public int NumeroCuenta { get;internal set; }
         public ETipoCuenta Tipo { get; internal set; }
         public decimal SaldoInicial { get; internal set; }

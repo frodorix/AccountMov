@@ -3,7 +3,7 @@
 namespace CORE.Account.Exception
 {
     [Serializable]
-    internal class CuentaException : IOException
+    public class CuentaException : IOException
     {
         public CuentaException()
         {

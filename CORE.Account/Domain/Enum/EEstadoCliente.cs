@@ -3,6 +3,6 @@
     public enum EEstadoCliente
     {
         Activo=1,
-        Inactivo=2
+        Inactivo=0
     }
 }

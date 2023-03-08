@@ -13,6 +13,6 @@ namespace CORE.Account.Interfaces
         Task<MCuenta> ObtenerCuenta(int numeroCuenta);
         Task<decimal> ObtenerSaldoCuenta(int numeroCuenta);
         Task<bool> IsLimiteRetiroExedido(int numeroCuenta, DateTime now);
-        Task<MMovimiento> RegistrarMovimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento credito, decimal valorCredito, decimal saldo);
+        
     }
 }
