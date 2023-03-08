@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace com.frodorix.bank
 {
-    public partial class AccountMovsContext : DbContext
+    public partial class MyContext : DbContext
     {
-        public AccountMovsContext()
+        public MyContext()
         {
         }
 
-        public AccountMovsContext(DbContextOptions<AccountMovsContext> options)
+        public MyContext(DbContextOptions<MyContext> options)
             : base(options)
         {
         }

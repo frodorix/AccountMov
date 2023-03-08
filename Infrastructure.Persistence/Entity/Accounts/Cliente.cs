@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CORE.Account.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace com.frodorix.bank
@@ -33,7 +34,7 @@ namespace com.frodorix.bank
         [StringLength(50)]
         [Unicode(false)]
         public string Contrasena { get; set; } = null!;
-        public int Estado { get; set; }
+        public EEstadoCliente Estado { get; set; }
         [Column("LimiteDiario", TypeName = "decimal(18, 2)")]
         public decimal LimiteDiario { get; set; }
         [InverseProperty("Cliente")]

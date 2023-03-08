@@ -2,19 +2,29 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CORE.Account.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace com.frodorix.bank
 {
     public partial class Movimiento
     {
+        public Movimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento tipo, decimal valor, decimal saldo)
+        {
+            NumeroCuenta = numeroCuenta;
+            Fecha = fecha;
+            Tipo = tipo;
+            Valor = valor;
+            Saldo = saldo;
+        }
+
         [Key]
         [Column("id")]
         public int Id { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Fecha { get; set; }
         [Column("tipo")]
-        public int Tipo { get; set; }
+        public ETipoMovimiento Tipo { get; set; }
         [Column("valor", TypeName = "decimal(18, 2)")]
         public decimal Valor { get; set; }
         [Column("saldo", TypeName = "decimal(18, 2)")]
@@ -24,6 +34,6 @@ namespace com.frodorix.bank
 
         [ForeignKey("NumeroCuenta")]
         [InverseProperty("Movimientos")]
-        public virtual Cuenta? NumeroCuentaNavigation { get; set; }
+        public virtual Cuenta? Cuenta { get; set; }
     }
 }

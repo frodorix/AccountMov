@@ -27,7 +27,7 @@ namespace com.frodorix.bank
         [ForeignKey("ClienteId")]
         [InverseProperty("Cuenta")]
         public virtual Cliente? Cliente { get; set; }
-        [InverseProperty("NumeroCuentaNavigation")]
+        [InverseProperty("Cuenta")]
         public virtual ICollection<Movimiento> Movimientos { get; set; }
     }
 }
