@@ -13,7 +13,8 @@ namespace CORE.Account.Domain.Model
         {
             this.Tipo= tipo;
             this.Fecha= fecha;
-            this.Saldo= saldo;                       
+            this.Saldo= saldo;
+            this.Valor = valor;
         }
         public DateTime Fecha { get; internal set; }
         public ETipoMovimiento Tipo{ get; internal set; }

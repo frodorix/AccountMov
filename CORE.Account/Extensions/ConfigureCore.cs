@@ -1,5 +1,6 @@
 ﻿using CORE.Account.Application;
 using CORE.Account.Application.Interfaces;
+using CORE.Account.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace CORE.Account.Extensions
         {
             services.AddTransient<IClientesService, ClientesService>();
             services.AddTransient<ICuentasService, CuentasService>();
-            
+            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             return services;
         }
     }

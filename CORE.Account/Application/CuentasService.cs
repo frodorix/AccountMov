@@ -2,6 +2,7 @@
 using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
+using CORE.Account.Helpers;
 using CORE.Account.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace CORE.Account.Application
         private readonly ICuentasRepository cuentasRespository;
         private readonly IMovimientosRepository movimientosRespository;
         private readonly IClientesRepository clientesRespository;
-        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository)
+        private readonly IDateTimeProvider dateTimeProvider;
+        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository, IDateTimeProvider dateTimeProvider)
         {
             this.cuentasRespository = cuentasRespositor;
             this.movimientosRespository = movimientosRespository;   
             this.clientesRespository = clientesRespository;
+            this.dateTimeProvider = dateTimeProvider;
         }
         /// <summary>
         /// valida el estado de una cuenta
@@ -57,7 +60,8 @@ namespace CORE.Account.Application
             var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
             var valorCredito = Math.Abs(valor);
             decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(numeroCuenta);
-            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: DateTime.Now, ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
+ 
+            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
             return movimiento;
         }
 
@@ -72,7 +76,7 @@ namespace CORE.Account.Application
         public async Task<MMovimiento> RegistrarDebito(int numeroCuenta, decimal valor)
         {
             var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
-            var valorDebito = Math.Abs(valor) * -1;
+            var valorDebito = Math.Abs(valor) ;
             decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(cuenta.NumeroCuenta);
             #region validacion de saldo
             if (saldoActual - valorDebito < 0)//no se debe permitr debito en saldo 0
@@ -80,13 +84,13 @@ namespace CORE.Account.Application
                 throw new CuentaException("Saldo no disponible");
             }
             decimal limite = await this.clientesRespository.ObtenerLimiteRetiro(cuenta.ClienteId);
-            decimal totalRetiros = await this.movimientosRespository.ObtenerTotalRetiros(cuenta.ClienteId, DateTime.Now);
+            decimal totalRetiros = await this.movimientosRespository.ObtenerTotalRetiros(cuenta.ClienteId, dateTimeProvider.GetCurrentTime());
             if (totalRetiros + valorDebito > limite)
             {
                 throw new CuentaException("Cupo diario Excedido");
             }
             #endregion
-            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: DateTime.Now, ETipoMovimiento.Debito, valorDebito, saldoActual - valorDebito);
+            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Debito, valorDebito*-1, saldoActual - valorDebito);
             return movimiento;
         }
     }
