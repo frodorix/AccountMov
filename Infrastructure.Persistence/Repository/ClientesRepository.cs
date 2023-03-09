@@ -1,4 +1,5 @@
-﻿using CORE.Account.Domain.Model;
+﻿using CORE.Account.Domain.Enum;
+using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
 using CORE.Account.Interfaces;
 using Infrastructure.Persistence.Contexts;
@@ -20,22 +21,31 @@ namespace Infrastructure.Persistence.Repository
 
         public Task<MCliente> ObtenerCliente(int clienteId)
         {
-            throw new NotImplementedException();
+            this.GetById(clienteId);
         }
 
         public async Task<IEnumerable<DCliente>> ObtenerClientes(string nombre)
         {
-            var res= await this.DB
+            var res = await this.DB
                 .Clientes
                 .Where(x => nombre.Contains(nombre))
-                .Select(x=> new DCliente(x.ClienteId, x.Nombre,x.Estado,x.Identificacion ))
+                .Select(x => new DCliente(x.ClienteId, x.Nombre, x.Estado, x.Identificacion))
                 .ToListAsync();
             return res;
         }
 
-        public Task<DEstadoCuenta[]> ObtenerEstadoCuenta(int clienteId, DateTime inicio, DateTime fin)
+        public async Task<DEstadoCuenta[]> ObtenerEstadoCuenta(int clienteId, DateTime inicio, DateTime fin)
         {
-            throw new NotImplementedException();
+            var resultado = await DB.Cuenta
+                .Select(x => new DEstadoCuenta()
+                {
+                    NumeroCuenta = x.NumeroCuenta,
+                    Saldo = x.Movimientos.Sum(m => m.Valor),
+                    Debitos = x.Movimientos.Count(m => m.Tipo == ETipoMovimiento.Debito),
+                    Creditos = x.Movimientos.Count(m => m.Tipo == ETipoMovimiento.Credito)
+                })
+                .ToArrayAsync();
+            return resultado;
         }
 
         public async Task<decimal> ObtenerLimiteRetiro(int clienteId)
