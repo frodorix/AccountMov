@@ -34,6 +34,6 @@ namespace Infrastructure.Persistence.Entity.Accounts
 
         [ForeignKey("NumeroCuenta")]
         [InverseProperty("Movimientos")]
-        public virtual Cuenta? Cuenta { get; set; }
+        public virtual Cuenta Cuenta { get; set; }
     }
 }

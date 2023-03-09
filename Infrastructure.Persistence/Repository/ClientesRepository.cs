@@ -45,16 +45,18 @@ namespace Infrastructure.Persistence.Repository
 
         public async Task<DEstadoCuenta[]> ObtenerEstadoCuenta(int clienteId, DateTime inicio, DateTime fin)
         {
-            var resultado = await DB.Cuenta
-                .Select(x => new DEstadoCuenta()
+            var movimientos = await DB.Movimientos
+                .Where(m => m.Cuenta.ClienteId == clienteId && m.Fecha >= inicio && m.Fecha <= fin)
+                .GroupBy(m => m.Cuenta.NumeroCuenta)
+                .Select(g => new DEstadoCuenta()
                 {
-                    NumeroCuenta = x.NumeroCuenta,
-                    Saldo = x.Movimientos.Sum(m => m.Valor),
-                    Debitos = x.Movimientos.Count(m => m.Tipo == ETipoMovimiento.Debito),
-                    Creditos = x.Movimientos.Count(m => m.Tipo == ETipoMovimiento.Credito)
+                    NumeroCuenta = g.Key,
+                    Saldo = g.Sum(m => m.Valor),
+                    Debitos = g.Count(m => m.Tipo == ETipoMovimiento.Debito),
+                    Creditos = g.Count(m => m.Tipo == ETipoMovimiento.Credito)
                 })
                 .ToArrayAsync();
-            return resultado;
+            return movimientos;
         }
 
         public async Task<decimal> ObtenerLimiteRetiro(int clienteId)
