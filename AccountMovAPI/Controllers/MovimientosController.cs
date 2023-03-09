@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CORE.Account.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +9,11 @@ namespace AccountMovAPI.Controllers
     [ApiController]
     public class MovimientosController : ControllerBase
     {
+        public readonly IClientesService clientesService;
+        public MovimientosController(IClientesService clientesService)
+        {
+            this.clientesService = clientesService;
+        }
         // GET: api/<MovimientosController>
         [HttpGet]
         public IEnumerable<string> Get()

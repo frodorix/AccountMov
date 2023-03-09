@@ -1,4 +1,5 @@
-﻿using CORE.Account.Domain.Model;
+﻿using CORE.Account.Application.Interfaces;
+using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
 using CORE.Account.Interfaces;
 using System;
@@ -9,17 +10,27 @@ using System.Threading.Tasks;
 
 namespace CORE.Account.Application
 {
-    internal class ClientesService
-    {
+    internal class ClientesService : IClientesService
+    {   
         private readonly IClientesRepository clientesRespository;
-        public ClientesService(IClientesRepository clientesRespository) { 
+        public ClientesService(IClientesRepository clientesRespository)
+        {
             this.clientesRespository = clientesRespository;
         }
+
+        public async Task<IEnumerable<DCliente>> ObtenerClientes(string nombre)
+        {
+            return await this.clientesRespository.ObtenerClientes(nombre);
+        }
+
         public async Task<DCliente> ObtenerEstadoCuenta(int clienteId, DateTime inicio, DateTime fin)
         {
             MCliente cliente = await this.clientesRespository.ObtenerCliente(clienteId);
             DEstadoCuenta[] estadoCuenta = await this.clientesRespository.ObtenerEstadoCuenta(clienteId, inicio, fin);
-            return new DCliente(cliente.Id, cliente.Nombre, cliente.Estado, estadoCuenta);
+            var dto = new DCliente(clienteId: cliente.Id, nombre : cliente.Nombre, estado : cliente.Estado, identificacion : cliente.Identificacion,estadoCuenta : estadoCuenta  );
+            return dto;
         }
+
+       
     }
 }

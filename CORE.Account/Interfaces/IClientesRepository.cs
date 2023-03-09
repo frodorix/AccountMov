@@ -12,5 +12,7 @@ namespace CORE.Account.Interfaces
     {
         Task<MCliente> ObtenerCliente(int clienteId);
         Task<DEstadoCuenta[]> ObtenerEstadoCuenta(int clienteId, DateTime inicio, DateTime fin);
+        Task<decimal> ObtenerLimiteRetiro(int clienteId);
+        Task<IEnumerable<DCliente>> ObtenerClientes(string nombre);
     }
 }

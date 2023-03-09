@@ -1,7 +1,8 @@
-﻿using com.frodorix.bank;
-using CORE.Account.Domain.Enum;
+﻿using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
 using CORE.Account.Interfaces;
+using Infrastructure.Persistence.Contexts;
+using Infrastructure.Persistence.Entity.Accounts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,7 @@ namespace Infrastructure.Persistence.Repository
         {
         }
 
-        public async Task<bool> IsLimiteRetiroExedido(int numeroCuenta, DateTime now)
-        {  
-            
-            
-        }
+        
 
         public async Task<MCuenta> ObtenerCuenta(int numeroCuenta)
         {

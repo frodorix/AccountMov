@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Infrastructure.Persistence.Entity.Accounts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace com.frodorix.bank
+namespace Infrastructure.Persistence.Contexts
 {
     public partial class MyContext : DbContext
     {
@@ -41,7 +42,7 @@ namespace com.frodorix.bank
 
             modelBuilder.Entity<Movimiento>(entity =>
             {
-                entity.HasOne(d => d.NumeroCuentaNavigation)
+                entity.HasOne(d => d.Cuenta)
                     .WithMany(p => p.Movimientos)
                     .HasForeignKey(d => d.NumeroCuenta)
                     .HasConstraintName("FK_Movimientos_Cuenta");

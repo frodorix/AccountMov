@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace com.frodorix.bank
+namespace Infrastructure.Persistence.Entity.Accounts
 {
     public partial class Cuenta
     {

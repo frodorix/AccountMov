@@ -1,4 +1,4 @@
-﻿using com.frodorix.bank;
+﻿using Infrastructure.Persistence.Contexts;
 using Infrastructure.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

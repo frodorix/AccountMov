@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CORE.Account.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
-namespace com.frodorix.bank
+namespace Infrastructure.Persistence.Entity.Accounts
 {
     public partial class Movimiento
     {

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CORE.Account.Application.Interfaces;
+using CORE.Account.Domain.Model;
+using CORE.Account.DTO;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +11,17 @@ namespace AccountMovAPI.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
+        private readonly IClientesService clientes;
+        public ClientesController(IClientesService clientes)
+        {
+            this.clientes = clientes;
+        }
         // GET: api/<ClientesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<DCliente>> Get(string nombre)
         {
-            return new string[] { "value1", "value2" };
+            var clientes = await this.clientes.ObtenerClientes(nombre);
+            return clientes;
         }
 
         // GET api/<ClientesController>/5
@@ -26,6 +35,7 @@ namespace AccountMovAPI.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            
         }
 
         // PUT api/<ClientesController>/5

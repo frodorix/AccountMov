@@ -23,8 +23,10 @@ namespace TEST.TestProject
             
             Mock<ICuentasRepository> cuentasRepository = new Mock<ICuentasRepository>();
             Mock<IMovimientosRepository> movimientosRepository = new Mock<IMovimientosRepository>();
+            Mock<IClientesRepository> clientesRepository = new Mock<IClientesRepository>();
 
             int numeroCuenta = 1000;
+            int clienteId = 1; 
             DateTime fecha = default;
             var tipoMovimiento = ETipoMovimiento.Credito;
             decimal valorCredito = 250;
@@ -40,10 +42,14 @@ namespace TEST.TestProject
 
              cuentasRepository
                 .Setup(x => x.ObtenerCuenta(numeroCuenta))
-                .ReturnsAsync((MCuenta)null); 
-            
+                .ReturnsAsync((MCuenta)null);
 
-            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object);            
+            //clientesRepository
+            //    .Setup(x => x.ObtenerLimiteRetiro(clienteId))
+            //    .ReturnsAsync((MCuenta)null);
+
+
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object);            
             try
             {
                 var movimiento = cuentasService.RegistrarCredito(numeroCuenta, valorCredito);

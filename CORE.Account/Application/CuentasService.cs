@@ -16,11 +16,12 @@ namespace CORE.Account.Application
 
         private readonly ICuentasRepository cuentasRespository;
         private readonly IMovimientosRepository movimientosRespository;
-
-        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository)
+        private readonly IClientesRepository clientesRespository;
+        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository)
         {
             this.cuentasRespository = cuentasRespositor;
             this.movimientosRespository = movimientosRespository;   
+            this.clientesRespository = clientesRespository;
         }
         /// <summary>
         /// valida el estado de una cuenta
@@ -78,8 +79,9 @@ namespace CORE.Account.Application
             {
                 throw new CuentaException("Saldo no disponible");
             }
-            bool islimiteExcedido = await this.cuentasRespository.IsLimiteRetiroExedido(cuenta.NumeroCuenta, DateTime.Now);
-            if (islimiteExcedido)
+            decimal limite = await this.clientesRespository.ObtenerLimiteRetiro(cuenta.ClienteId);
+            decimal totalRetiros = await this.movimientosRespository.ObtenerTotalRetiros(cuenta.ClienteId, DateTime.Now);
+            if (totalRetiros + valorDebito > limite)
             {
                 throw new CuentaException("Cupo diario Excedido");
             }

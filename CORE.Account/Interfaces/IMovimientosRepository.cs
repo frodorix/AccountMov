@@ -11,5 +11,6 @@ namespace CORE.Account.Interfaces
     public interface IMovimientosRepository
     {
         Task<MMovimiento> RegistrarMovimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento tipo, decimal valor, decimal saldo);
+        Task<decimal> ObtenerTotalRetiros(int clienteId, DateTime now);
     }
 }
