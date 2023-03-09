@@ -39,7 +39,7 @@ namespace Infrastructure.Persistence.Repository
             var entidad = await this.FindAsync(clienteId);
             if(entidad == null)
             {
-                throw new ClienteException($"No existe el cliente {clienteId}");
+                throw new NotFoundException($"No existe el cliente {clienteId}");
             }
             this.Remove(entidad);
             var eliminados = await DB.SaveChangesAsync();
@@ -51,7 +51,7 @@ namespace Infrastructure.Persistence.Repository
         {
             var entidad = await this.FindAsync(cliente.Id);
             if (entidad==null)
-                throw new ClienteException($"CLiente {cliente.Id} no enconrtado");
+                throw new NotFoundException($"CLiente {cliente.Id} no enconrtado");
             
             entidad.Nombre=cliente.Nombre;
             entidad.Identificacion=cliente.Identificacion;

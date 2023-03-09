@@ -38,7 +38,7 @@ namespace Infrastructure.Persistence.Repository
             var entidad = await this.FindAsync(movimientoId);
             if (entidad == null)
             {
-                throw new CuentaException($"No existe la cuenta {movimientoId}");
+                throw new NotFoundException($"No existe la cuenta {movimientoId}");
             }
             this.Remove(entidad);
             var eliminados = await DB.SaveChangesAsync();
@@ -49,7 +49,7 @@ namespace Infrastructure.Persistence.Repository
         {
             var entidad = await this.FindAsync(movimiento.Id);
             if (entidad == null)
-                throw new MovimientoException($"No existe el movimiento {movimiento.Id}");
+                throw new NotFoundException($"No existe el movimiento {movimiento.Id}");
 
             entidad.Tipo = movimiento.Tipo;
             entidad.Saldo = movimiento.Saldo;
