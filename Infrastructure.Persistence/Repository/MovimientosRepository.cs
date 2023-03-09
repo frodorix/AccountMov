@@ -19,9 +19,12 @@ namespace Infrastructure.Persistence.Repository
         {
         }
 
-        public Task<decimal> ObtenerTotalRetiros(int clienteId, DateTime now)
+        public async Task<decimal> ObtenerTotalRetiros(int clienteId, DateTime fecha)
         {
-            throw new NotImplementedException();
+            decimal total = await  DB.Movimientos
+                        .Where(m => m.Fecha.Date == fecha.Date)
+                        .SumAsync(m => m.Valor);
+            return total;
         }
 
         public async Task<MMovimiento> RegistrarMovimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento tipo, decimal valor, decimal saldo)

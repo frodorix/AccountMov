@@ -39,9 +39,9 @@ namespace Infrastructure.Persistence.Repository
             return _dbContext.Set<TEntity>().ToList();
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            return _dbContext.Set<TEntity>().Find(id);
+            return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
         public void Remove(TEntity entity)

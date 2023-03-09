@@ -1,4 +1,5 @@
-﻿using CORE.Account.Domain.Enum;
+﻿using AutoMapper;
+using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
 using CORE.Account.Interfaces;
@@ -19,9 +20,17 @@ namespace Infrastructure.Persistence.Repository
         {
         }
 
-        public Task<MCliente> ObtenerCliente(int clienteId)
+        public async Task<MCliente> ObtenerCliente(int clienteId)
         {
-            this.GetById(clienteId);
+            var cliente= await this.GetById(clienteId);
+            MapperConfiguration config;
+            config = new MapperConfiguration(cfg =>
+            {
+            });
+
+            var mapper = new Mapper(config);
+            var result = mapper.Map<MCliente>(cliente);
+            return result;
         }
 
         public async Task<IEnumerable<DCliente>> ObtenerClientes(string nombre)
