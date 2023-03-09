@@ -37,7 +37,7 @@ namespace CORE.Account.Application
             {
                 throw new CuentaException($"Cuenta {numeroCuenta} no existe");
             }
-            else if (cuenta.Estado == EstadoCuenta.Inactivo)
+            else if (cuenta.Estado == EEstadoCuenta.Inactivo)
             {
                 throw new CuentaException($"Cuenta {numeroCuenta} Inactiva");
             }

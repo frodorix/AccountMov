@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CORE.Account.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Entity.Accounts
@@ -21,8 +22,8 @@ namespace Infrastructure.Persistence.Entity.Accounts
         [Column("saldoInicial", TypeName = "decimal(18, 2)")]
         public decimal SaldoInicial { get; set; }
         [Column("clienteId")]
-        public int? ClienteId { get; set; }
-        public int Estado { get; set; }
+        public int ClienteId { get; set; }
+        public EEstadoCuenta Estado { get; set; }
 
         [ForeignKey("ClienteId")]
         [InverseProperty("Cuenta")]
