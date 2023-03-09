@@ -18,11 +18,16 @@ namespace CORE.Account.Domain.Model
             Estado = estado;
         }
 
-        public int NumeroCuenta { get;internal set; }
+        public int NumeroCuenta { get; set; }
         public ETipoCuenta Tipo { get; internal set; }
         public decimal SaldoInicial { get; internal set; }
         public EEstadoCuenta Estado { get; set; }
         public int ClienteId { get; set; }
 
+        public bool isValid()
+        {
+            var valido = (this.ClienteId > 0);                
+            return valido;
+        }
     }
 }

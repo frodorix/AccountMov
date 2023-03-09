@@ -12,5 +12,11 @@ namespace CORE.Account.Interfaces
     {
         Task<MMovimiento> RegistrarMovimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento tipo, decimal valor, decimal saldo);
         Task<decimal> ObtenerTotalRetiros(int clienteId, DateTime now);
+        #region ABM - CRUD
+        Task<MMovimiento> Crear(MMovimiento movimiento);
+        Task<int> Eliminar(int movimientoId);
+        Task<int> Modificar(MMovimiento movimiento);
+        Task<MMovimiento> ObtenerPorId(int id);
+        #endregion
     }
 }

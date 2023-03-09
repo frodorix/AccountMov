@@ -26,6 +26,37 @@ namespace CORE.Account.Application
             this.clientesRespository = clientesRespository;
             this.dateTimeProvider = dateTimeProvider;
         }
+
+        #region ABM
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cuenta"></param>
+        /// <returns></returns>
+        /// <exception cref="ClienteException"></exception>
+        public async Task<MCuenta> Crear(MCuenta cuenta)
+        {
+            if (!cuenta.isValid())
+                throw new CuentaException("Datos invalidos");            
+
+            var nuevo = await cuentasRespository.Crear(cuenta);
+
+            return nuevo;
+        }
+
+        public async Task<int> Eliminar(int clienteId)
+        {
+            int eliminados = await this.cuentasRespository.Eliminar(clienteId);
+            return eliminados;
+        }
+
+        public async Task<int> Modificar(int id  , EEstadoCuenta estado)
+        {
+            return await this.cuentasRespository.Modificar(id, estado);
+        }
+        #endregion
+
+
         /// <summary>
         /// valida el estado de una cuenta
         /// </summary>
@@ -92,6 +123,11 @@ namespace CORE.Account.Application
             #endregion
             MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Debito, valorDebito*-1, saldoActual - valorDebito);
             return movimiento;
+        }
+
+        public async Task<MCuenta> ObtenerPorId(int id)
+        {
+            return await this.cuentasRespository.ObtenerPorId(id);
         }
     }
 }

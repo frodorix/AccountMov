@@ -53,5 +53,7 @@ namespace Infrastructure.Persistence.Repository
         {
             _dbContext.Set<TEntity>().RemoveRange(entities);
         }
+
+       
     }
 }

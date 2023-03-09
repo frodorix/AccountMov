@@ -20,7 +20,7 @@ namespace Infrastructure.Persistence.Entity.Accounts
         [StringLength(50)]
         [Unicode(false)]
         public string Nombre { get; set; } = null!;
-        public short Genero { get; set; }
+        public EGenero Genero { get; set; }
         public short Edad { get; set; }
         [StringLength(15)]
         [Unicode(false)]

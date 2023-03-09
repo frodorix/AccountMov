@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
+using CORE.Account.Exception;
 using CORE.Account.Interfaces;
 using Infrastructure.Persistence.Contexts;
 using Infrastructure.Persistence.Entity.Accounts;
@@ -18,7 +19,56 @@ namespace Infrastructure.Persistence.Repository
         public MovimientosRepository(MyContext contex) : base(contex)
         {
         }
+        #region ABM - CRUD
+        public async Task<MMovimiento> Crear(MMovimiento movimiento)
+        {
+            MapperConfiguration config;
+            config = new MapperConfiguration(cfg => { });
+            var mapper = new Mapper(config);
+            var entidad = mapper.Map<Movimiento>(movimiento);
 
+            DB.Movimientos.Add(entidad);
+            _ = await DB.SaveChangesAsync();
+            movimiento.Id = entidad.Id;
+            return movimiento;
+        }
+
+        public async Task<int> Eliminar(int movimientoId)
+        {
+            var entidad = await this.FindAsync(movimientoId);
+            if (entidad == null)
+            {
+                throw new CuentaException($"No existe la cuenta {movimientoId}");
+            }
+            this.Remove(entidad);
+            var eliminados = await DB.SaveChangesAsync();
+            return eliminados;
+        }
+
+        public async Task<int> Modificar(MMovimiento movimiento)
+        {
+            var entidad = await this.FindAsync(movimiento.Id);
+            if (entidad == null)
+                throw new MovimientoException($"No existe el movimiento {movimiento.Id}");
+
+            entidad.Tipo = movimiento.Tipo;
+            entidad.Saldo = movimiento.Saldo;
+            entidad.Valor = movimiento.Valor;
+            entidad.Fecha = movimiento.Fecha;
+
+            var modificados = await DB.SaveChangesAsync();
+            return modificados;
+        }
+
+        public async Task<MMovimiento> ObtenerPorId(int id)
+        {
+            var res = await this.DB.Movimientos
+                         .Where(x => x.Id == id)
+                         .Select(x => new MMovimiento(x.Id,x.Fecha, x.Tipo, x.Valor, x.Saldo))
+                         .FirstOrDefaultAsync();
+            return res;
+        }
+        #endregion
         public async Task<decimal> ObtenerTotalRetiros(int clienteId, DateTime fecha)
         {
             decimal total = await  DB.Movimientos

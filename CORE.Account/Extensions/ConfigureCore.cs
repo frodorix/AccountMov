@@ -17,6 +17,7 @@ namespace CORE.Account.Extensions
             services.AddTransient<IClientesService, ClientesService>();
             services.AddTransient<ICuentasService, CuentasService>();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            services.AddScoped<IMovimientosService, MovimientosService>();
             return services;
         }
     }

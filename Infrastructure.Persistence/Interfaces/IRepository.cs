@@ -10,7 +10,7 @@ namespace Infrastructure.Persistence.Interfaces
     public interface IRepository<TEntity> where TEntity : class
     {
         //Fiinding OBjetcts
-        TEntity GetById(int id);
+        Task<TEntity> GetById(int id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         ValueTask<TEntity?> FindAsync(params object?[]? keyValues);
