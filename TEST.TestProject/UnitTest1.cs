@@ -24,7 +24,8 @@ namespace TEST.TestProject
         ETipoMovimiento tipoMovimiento = ETipoMovimiento.Credito,
         decimal valorCredito = 250,
         decimal saldoActual = 2000,
-        decimal limiteRetiros = 1000)
+        decimal limiteRetiros = 1000,
+        EEstadoCuenta estadoCuenta= EEstadoCuenta.Activo)
         {
             movimientosRepository
               .Setup(x => x.RegistrarMovimiento(numeroCuenta, fecha, ETipoMovimiento.Credito, valorCredito, saldoActual))
@@ -40,7 +41,7 @@ namespace TEST.TestProject
 
             cuentasRepository
                .Setup(x => x.ObtenerCuenta(numeroCuenta))
-               .ReturnsAsync(new MCuenta(numeroCuenta, clienteId, 100, EEstadoCuenta.Inactivo));
+               .ReturnsAsync(new MCuenta(numeroCuenta, clienteId, 100, estadoCuenta));
 
             clientesRepository
                 .Setup(x => x.ObtenerLimiteRetiro(clienteId))
@@ -52,6 +53,7 @@ namespace TEST.TestProject
             int numeroCuenta = 1000;
             decimal saldoActual = 2000;
             decimal valorCredito = 250;
+
             InitMoq(
                 numeroCuenta ,
                 clienteId: 1,
@@ -59,7 +61,39 @@ namespace TEST.TestProject
                 tipoMovimiento: ETipoMovimiento.Credito,
                 valorCredito,
                 saldoActual,
-                limiteRetiros: 1000
+                limiteRetiros: 1000,
+                estadoCuenta: EEstadoCuenta.Inactivo
+            );
+
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object);
+            try
+            {
+                var movimiento = await cuentasService.RegistrarCredito(numeroCuenta, valorCredito);
+                Assert.That(saldoActual + Math.Abs(valorCredito), Is.EqualTo(movimiento.Saldo));
+            }
+            catch (CuentaException ex)
+            {
+                Assert.Pass($"Error en la cuenta: {ex.Message}");
+            }
+            Assert.Fail();
+        }
+
+
+        [Test]
+        public async Task RegistrarCreditoAcuentaHabilitada()
+        {
+            int numeroCuenta = 1000;
+            decimal saldoActual = 2000;
+            decimal valorCredito = 250;
+            InitMoq(
+                numeroCuenta,
+                clienteId: 1,
+                fecha: DateTime.Now,
+                tipoMovimiento: ETipoMovimiento.Credito,
+                valorCredito,
+                saldoActual,
+                limiteRetiros: 1000,
+                estadoCuenta: EEstadoCuenta.Activo
             );
 
             ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object);
