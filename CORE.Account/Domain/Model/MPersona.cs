@@ -9,7 +9,7 @@ namespace CORE.Account.Domain.Model
 {
     public class MPersona
     {
-        public MPersona(string nombre, EGenero genero, short edad, string identificacion, string direccion, string telefono)
+        public MPersona(string nombre, EGenero genero, int edad, string identificacion, string direccion, string telefono)
         {
             this.Nombre = nombre;
             this.Genero = genero;
@@ -20,7 +20,7 @@ namespace CORE.Account.Domain.Model
         }
         public string Nombre { get; internal set; }
         public EGenero Genero { get;  set; }
-        public short Edad { get;  set; }
+        public int Edad { get;  set; }
         public string Identificacion { get; internal set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }

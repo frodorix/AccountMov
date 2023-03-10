@@ -36,7 +36,7 @@ if($hayAPI){
 cd ..
 docker build -t $apiimage -f .\AccountMovAPI\Dockerfile .
 ##iniciar API container
-docker run -d --name $apicontainer -p 8432:	 --network $network $apiimage		
+docker run -d --name $apicontainer -p 8432:80	 --network $network $apiimage		
 cd Tools
 
 echo "##############################################"

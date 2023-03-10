@@ -25,7 +25,11 @@ namespace Infrastructure.Persistence.Repository
         public async Task<MCuenta> Crear(MCuenta cuenta)
         {
             MapperConfiguration config;
-            config = new MapperConfiguration(cfg => { });
+            config = new MapperConfiguration(cfg => {
+
+                cfg.CreateMap<MCuenta, Cuenta>()
+                    .ForMember(dest => dest.NumeroCuenta, opt => opt.Ignore()); ;
+            });
             var mapper = new Mapper(config);
             var entidad = mapper.Map<Cuenta>(cuenta);
 

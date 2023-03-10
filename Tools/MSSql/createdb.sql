@@ -10,8 +10,8 @@ GO
 CREATE TABLE [dbo].[Cliente](
 	[ClienteId] [int] IDENTITY(1,1) NOT NULL,
 	[Nombre] [varchar](50) NOT NULL,
-	[Genero] [smallint] NOT NULL,
-	[Edad] [smallint] NOT NULL,
+	[Genero] [int] NOT NULL,
+	[Edad] [int] NOT NULL,
 	[Identificacion] [varchar](15)  NOT NULL UNIQUE,
 	[Direccion] [varchar](50) NOT NULL,
 	[Telefono] [varchar](20) NOT NULL,

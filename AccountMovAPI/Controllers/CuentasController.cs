@@ -1,4 +1,5 @@
-﻿using CORE.Account.Application.Interfaces;
+﻿using AccountMovAPI.DTO;
+using CORE.Account.Application.Interfaces;
 using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +16,11 @@ namespace AccountMovAPI.Controllers
     public class CuentasController : ControllerBase
     {
         private readonly ICuentasService cuentasService;
-        public CuentasController(ICuentasService cuentasService)
+        private readonly ILogger<ClientesController> _logger;
+        public CuentasController(ICuentasService cuentasService, ILogger<ClientesController> _logge)
         {
             this.cuentasService = cuentasService;  
+            this._logger = _logge;
         }
         // GET: api/<CuentasController>
         [HttpGet]
@@ -40,27 +43,28 @@ namespace AccountMovAPI.Controllers
 
         // POST api/<CuentasController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string json)
+        public async Task<IActionResult> Post([FromBody] DNuevaCuenta json)
         {
-            var cuenta = JsonConvert.DeserializeObject<MCuenta>(json);
-            if(cuenta == null) return BadRequest("JSon Invalido");
+            if(json == null) return BadRequest("JSon Invalido");
             try
             {
                 
-                cuenta = await this.cuentasService.Crear(cuenta);
-                var response = JsonConvert.SerializeObject(cuenta, new StringEnumConverter());
+                var nueva = await this.cuentasService.Crear(json.ToMCuenta());
+                var response = JsonConvert.SerializeObject(nueva.NumeroCuenta, new StringEnumConverter());
                 return StatusCode(201, response);
             }
             catch (ClienteException ex)
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.StackTrace);
                 return StatusCode(500);
             }
 
 
+        
         }
 
         // PUT api/<CuentasController>/5

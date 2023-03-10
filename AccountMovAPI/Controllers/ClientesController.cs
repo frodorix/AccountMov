@@ -1,9 +1,11 @@
-﻿using CORE.Account.Application.Interfaces;
+﻿using AccountMovAPI.DTO;
+using CORE.Account.Application.Interfaces;
 using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
 using CORE.Account.Exception;
 using Infrastructure.Persistence.Entity.Accounts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -16,17 +18,18 @@ namespace AccountMovAPI.Controllers
     public class ClientesController : ControllerBase
     {
         private readonly IClientesService clientesService;
+        private readonly ILogger<ClientesController> _logger;
 
-       
-
-        public ClientesController(IClientesService clientes)
+        public ClientesController(IClientesService clientes, ILogger<ClientesController> _logger)
         {
             this.clientesService = clientes;
+            this._logger = _logger;
         }
         // GET: api/<ClientesController>
         [HttpGet]
         public async Task<IEnumerable<DCliente>> Get(string nombre)
         {
+            this._logger.LogTrace($"Buscando cliente ${nombre}");
             var clientes = await this.clientesService.ObtenerClientes(nombre);
             return clientes;
         }
@@ -44,23 +47,22 @@ namespace AccountMovAPI.Controllers
 
         // POST api/<ClientesController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string json)
+        public async Task<IActionResult> Post([FromBody] DNuevoCliente cliente)
         {
-            
-            var cliente = JsonConvert.DeserializeObject<MCliente>(json);
-            if (cliente == null) return BadRequest();
             try
             {
-                cliente = await this.clientesService.Crear(cliente);
-                var response = JsonConvert.SerializeObject(cliente, new StringEnumConverter());
+                if (cliente == null) return BadRequest();
+                var nuevo = await this.clientesService.Crear(cliente.toMCliente());
+                var response = JsonConvert.SerializeObject(nuevo.Id, new StringEnumConverter());
                 return StatusCode(201,response);
             }
             catch (ClienteException ex)
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.StackTrace);
                 return StatusCode(500);
             }
             

@@ -24,6 +24,14 @@ namespace CORE.Account.Domain.Model
             this.Saldo= saldo;
             this.Valor = valor;
         }
+
+        public MMovimiento(ETipoMovimiento tipo, decimal valor)
+        {            
+            Tipo = tipo;
+            Valor = valor;
+
+        }
+
         public int Id { get;  set; }
         public DateTime Fecha { get; internal set; }
         public ETipoMovimiento Tipo{ get; internal set; }

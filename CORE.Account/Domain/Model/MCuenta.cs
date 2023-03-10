@@ -10,6 +10,13 @@ namespace CORE.Account.Domain.Model
     public class MCuenta
     {
 
+        public MCuenta(int clienteId, decimal saldoInicial, ETipoCuenta tipo)
+        {            
+            ClienteId = clienteId;
+            SaldoInicial = saldoInicial;
+            Estado = EEstadoCuenta.Activo;
+            this.Tipo = tipo;
+        }
         public MCuenta(int numeroCuenta, int clienteId, decimal saldoInicial, EEstadoCuenta estado)
         {
             NumeroCuenta = numeroCuenta;
@@ -26,7 +33,7 @@ namespace CORE.Account.Domain.Model
 
         public bool isValid()
         {
-            var valido = (this.ClienteId > 0);                
+            var valido = (this.ClienteId > 0);
             return valido;
         }
     }

@@ -25,7 +25,11 @@ namespace Infrastructure.Persistence.Repository
         public async Task<MCliente> Crear(MCliente cliente)
         {
             MapperConfiguration config;
-            config = new MapperConfiguration(cfg =>{});
+            config = new MapperConfiguration(cfg =>{
+            
+                cfg.CreateMap<MCliente, Cliente>()
+                    .ForMember(dest => dest.ClienteId, opt => opt.Ignore()); ;
+            });
             var mapper = new Mapper(config);
             var entidad = mapper.Map<Cliente>(cliente);
             DB.Clientes.Add(entidad);
@@ -80,7 +84,7 @@ namespace Infrastructure.Persistence.Repository
         {
             var res = await this.DB
                 .Clientes
-                .Where(x => nombre.Contains(nombre))
+                .Where(x => x.Nombre.Contains(nombre))
                 .Select(x => new DCliente(x.ClienteId, x.Nombre, x.Estado, x.Identificacion))
                 .ToListAsync();
             return res;

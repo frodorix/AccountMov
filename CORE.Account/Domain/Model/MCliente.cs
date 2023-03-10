@@ -10,10 +10,17 @@ namespace CORE.Account.Domain.Model
 {
     public class MCliente : MPersona
     {
-        public MCliente(string nombre, EGenero genero, short edad, string identificacion, string direccion, string telefono) : base(nombre, genero, edad, identificacion, direccion, telefono)
+        public MCliente(string nombre, EGenero genero, int edad, string identificacion, string direccion, string telefono) : base(nombre, genero, edad, identificacion, direccion, telefono)
         {
+            this.Estado = EEstadoCliente.Activo;
         }
-        public MCliente(int id, string nombre, EGenero genero, short edad, string identificacion, string direccion, string telefono, string contrasena, EEstadoCliente estado) : base(nombre, genero, edad, identificacion, direccion, telefono)
+
+        public MCliente(string nombre, EGenero genero, int edad, string identificacion, string direccion, string telefono, string contrasena) : this(nombre, genero, edad, identificacion, direccion, telefono)
+        {
+            this.Contrasena = contrasena;
+        }
+
+        public MCliente(int id, string nombre, EGenero genero, int edad, string identificacion, string direccion, string telefono, string contrasena, EEstadoCliente estado) : base(nombre, genero, edad, identificacion, direccion, telefono)
         {
             this.Id= id;
             this.Contrasena = contrasena;
@@ -28,11 +35,13 @@ namespace CORE.Account.Domain.Model
         {
             var valido = (this.Identificacion.Length > 5)
                 && (this.Nombre.Length > 10)
-                && (this.Contrasena.Length >= 4);
+                && (this.Contrasena?.Length >= 4);
 
             return valido;
         }
 
+
+        public decimal LimiteDiario { get; internal set; } = 1000;
       
         
     }

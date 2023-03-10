@@ -4,7 +4,12 @@ namespace CORE.Account.DTO
 {
     public class DCliente
     {
-        public DCliente(int clienteId, string nombre, EEstadoCliente estado, string identificacion) { }
+        public DCliente(int clienteId, string nombre, EEstadoCliente estado, string identificacion) { 
+            this.Id=clienteId;
+            this.Nombre=nombre; 
+            this.Estado=estado;
+            this.Identificacion = identificacion;
+        }
 
         public DCliente(int clienteId, string nombre, EEstadoCliente estado, string identificacion, DEstadoCuenta[] estadoCuenta) : this(clienteId, nombre, estado, identificacion)
         {

@@ -1,4 +1,5 @@
-﻿using CORE.Account.Application.Interfaces;
+﻿using AccountMovAPI.DTO;
+using CORE.Account.Application.Interfaces;
 using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
 using Microsoft.AspNetCore.Mvc;
@@ -38,15 +39,14 @@ namespace AccountMovAPI.Controllers
 
         // POST api/<MovimientosController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string json)
+        public async Task<IActionResult> Post([FromBody] DNuevoMovimiento json)
         {
-            var cuenta = JsonConvert.DeserializeObject<MMovimiento>(json);
-            if (cuenta == null) return BadRequest("JSon Invalido");
+            if (json == null) return BadRequest("JSon Invalido");
             try
             {
 
-                cuenta = await this.movimientosService.Crear(cuenta);
-                var response = JsonConvert.SerializeObject(cuenta, new StringEnumConverter());
+                var movimiento = await this.movimientosService.Crear(json.toMovimiento());
+                var response = JsonConvert.SerializeObject(movimiento.Id, new StringEnumConverter());
                 return StatusCode(201, response);
             }
             catch (ClienteException ex)
