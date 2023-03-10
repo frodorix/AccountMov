@@ -20,7 +20,7 @@ namespace Infrastructure.Persistence.Extensions
 
             services.AddDbContext<MyContext>(opt =>
             {
-                opt.UseSqlServer(config.GetConnectionString("ConnectionDB"));
+                opt.UseSqlServer(config.GetConnectionString("AccountsDB"));
             });
 
             services.AddTransient<IClientesRepository, ClientesRepository>();

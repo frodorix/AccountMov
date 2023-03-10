@@ -7,9 +7,12 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["AccountMovAPI/AccountMovAPI.csproj", "AccountMovAPI/"]
+COPY ["CORE.Account/CORE.Account.csproj", "CORE.Account/"]
+COPY ["Infrastructure.Persistence/Infrastructure.Persistence.csproj", "Infrastructure.Persistence/"]
 RUN dotnet restore "AccountMovAPI/AccountMovAPI.csproj"
 COPY . .
 WORKDIR "/src/AccountMovAPI"
+RUN rm -rf appsettings.Development.json
 RUN dotnet build "AccountMovAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish

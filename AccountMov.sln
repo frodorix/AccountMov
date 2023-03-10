@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "AccountMovAPI\WebAPI.csproj", "{AD069FD3-D088-4DA0-84F8-4F6A883C0073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountMovAPI", "AccountMovAPI\AccountMovAPI.csproj", "{AD069FD3-D088-4DA0-84F8-4F6A883C0073}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4878C99B-4BFE-46C8-B9AB-EBB334D68037} = {4878C99B-4BFE-46C8-B9AB-EBB334D68037}
 		{E0B0167C-DF24-4B0B-AA78-64F030EE48B6} = {E0B0167C-DF24-4B0B-AA78-64F030EE48B6}

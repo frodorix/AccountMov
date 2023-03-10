@@ -9,6 +9,7 @@ namespace Infrastructure.Persistence.Entity.Accounts
 {
     public partial class Movimiento
     {
+        public Movimiento() { }
         public Movimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento tipo, decimal valor, decimal saldo)
         {
             NumeroCuenta = numeroCuenta;
