@@ -47,7 +47,7 @@ namespace AccountMovAPI.Controllers
 
         // POST api/<ClientesController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DNuevoCliente cliente)
+        public async Task<IActionResult> Post([FromBody] DClienteNuevo cliente)
         {
             try
             {
@@ -71,13 +71,13 @@ namespace AccountMovAPI.Controllers
 
         // PUT api/<ClientesController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string json)
+        public async Task<IActionResult> Put(int id, [FromBody] DClienteModificable json)
         {
-            var cliente = JsonConvert.DeserializeObject<MCliente>(json);
-            if (cliente == null) return BadRequest();
+            if (json == null) return BadRequest();
+            json.Id = id;
             try
             {
-                var modificados = await this.clientesService.Modificar(cliente);                
+                var modificados = await this.clientesService.Modificar(json.ToMcliente());                
                 return Ok();
             }
             catch (NotFoundException ex)

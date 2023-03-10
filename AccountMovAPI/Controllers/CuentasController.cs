@@ -68,14 +68,14 @@ namespace AccountMovAPI.Controllers
         }
 
         // PUT api/<CuentasController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string json)
+        [HttpPut("{numeroCuenta}")]
+        public async Task<IActionResult> Put(int numeroCuenta, [FromBody] DCuentaModificable cuenta)
         {
-            DCuenta cuenta = JsonConvert.DeserializeObject<DCuenta>(json);
+            
             if (cuenta == null) return BadRequest();
             try
             {
-                var modificados = await this.cuentasService.Modificar(cuenta.id, cuenta.estado);
+                var modificados = await this.cuentasService.Modificar(numeroCuenta, cuenta.Estado);
                 return Ok();
             }
             catch (NotFoundException ex)

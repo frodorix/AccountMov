@@ -63,6 +63,7 @@ namespace Infrastructure.Persistence.Repository
             entidad.Saldo = movimiento.Saldo;
             entidad.Valor = movimiento.Valor;
             entidad.Fecha = movimiento.Fecha;
+            entidad.NumeroCuenta = movimiento.NumeroCuenta;
 
             var modificados = await DB.SaveChangesAsync();
             return modificados;

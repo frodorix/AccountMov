@@ -62,6 +62,7 @@ namespace Infrastructure.Persistence.Repository
             entidad.Edad = cliente.Edad;
             entidad.Direccion = cliente.Direccion;
             entidad.Telefono = cliente.Telefono;
+            entidad.Estado = cliente.Estado;
             
             var modificados = await DB.SaveChangesAsync();
             return modificados;

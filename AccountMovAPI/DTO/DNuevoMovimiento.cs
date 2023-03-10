@@ -10,7 +10,7 @@ namespace AccountMovAPI.DTO
         public int NumeroCuenta { get; set; }
         public decimal Valor{get;set; }
 
-        public MMovimiento toMovimiento()
+        public virtual MMovimiento toMovimiento()
         {
             return new MMovimiento(NumeroCuenta, Tipo, Valor);
         }

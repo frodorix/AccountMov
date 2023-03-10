@@ -67,13 +67,13 @@ namespace AccountMovAPI.Controllers
 
         // PUT api/<MovimientosController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string json)
+        public async Task<IActionResult> Put(int id, [FromBody] DMovimientoModificable json)
         {
-            var movimiento = JsonConvert.DeserializeObject<MMovimiento>(json);
-            if (movimiento == null) return BadRequest();
+            if (json == null) return BadRequest();
+            json.Id = id;
             try
             {
-                var modificados = await this.movimientosService.Modificar(movimiento);
+                _= await this.movimientosService.Modificar(json.toMovimiento());
                 return Ok();
             }
             catch (NotFoundException ex)
