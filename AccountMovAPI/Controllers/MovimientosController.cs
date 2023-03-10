@@ -15,9 +15,11 @@ namespace AccountMovAPI.Controllers
     public class MovimientosController : ControllerBase
     {
         public readonly IMovimientosService movimientosService;
-        public MovimientosController(IMovimientosService movimientosService)
+        private readonly ILogger<MovimientosController> _logger;
+        public MovimientosController(IMovimientosService movimientosService, ILogger<MovimientosController> _logger)
         {
             this.movimientosService = movimientosService;
+            this._logger = _logger;
         }
         // GET: api/<MovimientosController>
         [HttpGet]
@@ -53,8 +55,9 @@ namespace AccountMovAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.StackTrace);
                 return StatusCode(500);
             }
 

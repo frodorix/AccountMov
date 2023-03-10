@@ -23,14 +23,22 @@ namespace Infrastructure.Persistence.Repository
         public async Task<MMovimiento> Crear(MMovimiento movimiento)
         {
             MapperConfiguration config;
-            config = new MapperConfiguration(cfg => { });
+            config = new MapperConfiguration(cfg => {
+
+                cfg.CreateMap<MMovimiento, Movimiento>()
+                    .ForMember(dest => dest.Cuenta, opt => opt.Ignore())
+                    .ForMember(dest => dest.Id, opt => opt.Ignore())
+                    ;
+            });
             var mapper = new Mapper(config);
             var entidad = mapper.Map<Movimiento>(movimiento);
-
+            
+           
             DB.Movimientos.Add(entidad);
             _ = await DB.SaveChangesAsync();
             movimiento.Id = entidad.Id;
             return movimiento;
+           
         }
 
         public async Task<int> Eliminar(int movimientoId)

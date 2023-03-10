@@ -42,11 +42,11 @@ namespace TEST.TestProject
 
             movimientosRepository
               .Setup(x => x.RegistrarMovimiento(numeroCuenta, fecha, ETipoMovimiento.Credito, Math.Abs(valorCredito), saldoActualCuenta + Math.Abs(valorCredito)))
-              .ReturnsAsync(new MMovimiento(fecha, ETipoMovimiento.Credito, Math.Abs(valorCredito), saldoActualCuenta + Math.Abs(valorCredito)));
+              .ReturnsAsync(new MMovimiento(numeroCuenta,fecha, ETipoMovimiento.Credito, Math.Abs(valorCredito), saldoActualCuenta + Math.Abs(valorCredito)));
 
             movimientosRepository
               .Setup(x => x.RegistrarMovimiento(numeroCuenta, fecha, ETipoMovimiento.Debito, Math.Abs(valorCredito)*-1, saldoActualCuenta - Math.Abs(valorCredito)))
-              .ReturnsAsync(new MMovimiento(fecha, ETipoMovimiento.Debito, Math.Abs(valorCredito)*-1, saldoActualCuenta - Math.Abs(valorCredito)));
+              .ReturnsAsync(new MMovimiento(numeroCuenta,fecha, ETipoMovimiento.Debito, Math.Abs(valorCredito)*-1, saldoActualCuenta - Math.Abs(valorCredito)));
 
             cuentasRepository
                 .Setup(x => x.ObtenerSaldoCuenta(numeroCuenta))

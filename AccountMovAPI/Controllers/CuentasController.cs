@@ -16,8 +16,8 @@ namespace AccountMovAPI.Controllers
     public class CuentasController : ControllerBase
     {
         private readonly ICuentasService cuentasService;
-        private readonly ILogger<ClientesController> _logger;
-        public CuentasController(ICuentasService cuentasService, ILogger<ClientesController> _logge)
+        private readonly ILogger<CuentasController> _logger;
+        public CuentasController(ICuentasService cuentasService, ILogger<CuentasController> _logge)
         {
             this.cuentasService = cuentasService;  
             this._logger = _logge;

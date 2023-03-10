@@ -685,3 +685,330 @@ VALUES (@p0, @p1, @p2, @p3);
 SELECT [numeroCuenta]
 FROM [Cuenta]
 WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T06:33:50.406Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:33:50.446Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (15ms) [Parameters=[@p0='?' (Size = 50) (DbType = AnsiString), @p1='?' (Size = 50) (DbType = AnsiString), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 15) (DbType = AnsiString), @p6='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p7='?' (Size = 50) (DbType = AnsiString), @p8='?' (Size = 20) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cliente] ([Contrasena], [Direccion], [Edad], [Estado], [Genero], [Identificacion], [LimiteDiario], [Nombre], [Telefono])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+SELECT [ClienteId]
+FROM [Cliente]
+WHERE @@ROWCOUNT = 1 AND [ClienteId] = scope_identity();
+2023-03-10T06:33:52.581Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:33:52.605Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (13ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [c].[ClienteId], [c].[Nombre], [c].[Genero], [c].[Edad], [c].[Identificacion], [c].[Direccion], [c].[Telefono], [c].[Estado]
+FROM [Cliente] AS [c]
+WHERE [c].[ClienteId] = @__id_0
+2023-03-10T06:33:54.721Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:33:54.733Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cuenta] ([clienteId], [Estado], [saldoInicial], [tipo])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [numeroCuenta]
+FROM [Cuenta]
+WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T06:37:53.469Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T06:37:53.643Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T06:37:53.656Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T06:37:53.672Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T06:37:53.711Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T06:40:35.878Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T06:40:36.008Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T06:40:36.014Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T06:40:36.017Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T06:40:36.022Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T06:44:25.781Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T06:44:25.857Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T06:44:25.866Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T06:44:25.873Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T06:44:25.881Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T06:45:40.939Z [Error] AccountMovAPI.Controllers.MovimientosController:    at CORE.Account.Application.MovimientosService.Crear(MMovimiento movimiento)
+   at AccountMovAPI.Controllers.MovimientosController.Post(DNuevoMovimiento json) in C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\Controllers\MovimientosController.cs:line 50
+2023-03-10T06:46:19.109Z [Error] AccountMovAPI.Controllers.MovimientosController:    at lambda_method21(Closure , Object , Movimiento , ResolutionContext )
+   at Infrastructure.Persistence.Repository.MovimientosRepository.Crear(MMovimiento movimiento) in C:\Users\el_fr\Source\repos\AccountMovAPI\Infrastructure.Persistence\Repository\MovimientosRepository.cs:line 28
+   at CORE.Account.Application.MovimientosService.Crear(MMovimiento movimiento)
+   at AccountMovAPI.Controllers.MovimientosController.Post(DNuevoMovimiento json) in C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\Controllers\MovimientosController.cs:line 50
+2023-03-10T06:46:54.844Z [Error] AccountMovAPI.Controllers.MovimientosController:    at lambda_method22(Closure , Object , Movimiento , ResolutionContext )
+   at Infrastructure.Persistence.Repository.MovimientosRepository.Crear(MMovimiento movimiento) in C:\Users\el_fr\Source\repos\AccountMovAPI\Infrastructure.Persistence\Repository\MovimientosRepository.cs:line 28
+   at CORE.Account.Application.MovimientosService.Crear(MMovimiento movimiento)
+   at AccountMovAPI.Controllers.MovimientosController.Post(DNuevoMovimiento json) in C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\Controllers\MovimientosController.cs:line 50
+2023-03-10T06:50:09.788Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T06:50:09.860Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T06:50:09.864Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T06:50:09.868Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T06:50:09.871Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T06:50:44.105Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:55:29.444Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T06:55:29.513Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T06:55:29.517Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T06:55:29.523Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T06:55:29.530Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T06:56:13.932Z [Error] AccountMovAPI.Controllers.MovimientosController:    at CORE.Account.Application.MovimientosService.Crear(MMovimiento movimiento) in C:\Users\el_fr\Source\repos\AccountMovAPI\CORE.Account\Application\MovimientosService.cs:line 27
+   at AccountMovAPI.Controllers.MovimientosController.Post(DNuevoMovimiento json) in C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\Controllers\MovimientosController.cs:line 50
+2023-03-10T06:56:45.418Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:56:46.918Z [Error] Microsoft.EntityFrameworkCore.Database.Command: Failed executing DbCommand (210ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T06:56:47.227Z [Error] Microsoft.EntityFrameworkCore.Update: An exception occurred in the database while saving changes for context type 'Infrastructure.Persistence.Contexts.MyContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2023-03-10T06:56:47.681Z [Error] AccountMovAPI.Controllers.MovimientosController:    at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Infrastructure.Persistence.Repository.MovimientosRepository.Crear(MMovimiento movimiento) in C:\Users\el_fr\Source\repos\AccountMovAPI\Infrastructure.Persistence\Repository\MovimientosRepository.cs:line 37
+   at CORE.Account.Application.MovimientosService.Crear(MMovimiento movimiento)
+   at AccountMovAPI.Controllers.MovimientosController.Post(DNuevoMovimiento json) in C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\Controllers\MovimientosController.cs:line 50
+2023-03-10T06:57:59.244Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:58:01.330Z [Error] Microsoft.EntityFrameworkCore.Database.Command: Failed executing DbCommand (4ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T06:58:01.411Z [Error] Microsoft.EntityFrameworkCore.Update: An exception occurred in the database while saving changes for context type 'Infrastructure.Persistence.Contexts.MyContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2023-03-10T06:58:02.150Z [Error] AccountMovAPI.Controllers.MovimientosController:    at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Infrastructure.Persistence.Repository.MovimientosRepository.Crear(MMovimiento movimiento) in C:\Users\el_fr\Source\repos\AccountMovAPI\Infrastructure.Persistence\Repository\MovimientosRepository.cs:line 37
+   at CORE.Account.Application.MovimientosService.Crear(MMovimiento movimiento)
+   at AccountMovAPI.Controllers.MovimientosController.Post(DNuevoMovimiento json) in C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\Controllers\MovimientosController.cs:line 50
+2023-03-10T06:59:16.090Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T06:59:16.126Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T06:59:16.130Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T06:59:16.133Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T06:59:16.136Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T06:59:39.126Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T06:59:43.950Z [Error] Microsoft.EntityFrameworkCore.Database.Command: Failed executing DbCommand (115ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T06:59:44.160Z [Error] Microsoft.EntityFrameworkCore.Update: An exception occurred in the database while saving changes for context type 'Infrastructure.Persistence.Contexts.MyContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2023-03-10T07:03:42.701Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T07:03:42.821Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T07:03:42.831Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T07:03:42.838Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T07:03:42.848Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T07:03:59.188Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:04:02.168Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (230ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T07:04:54.331Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:04:54.463Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (21ms) [Parameters=[@p0='?' (Size = 50) (DbType = AnsiString), @p1='?' (Size = 50) (DbType = AnsiString), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 15) (DbType = AnsiString), @p6='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p7='?' (Size = 50) (DbType = AnsiString), @p8='?' (Size = 20) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cliente] ([Contrasena], [Direccion], [Edad], [Estado], [Genero], [Identificacion], [LimiteDiario], [Nombre], [Telefono])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+SELECT [ClienteId]
+FROM [Cliente]
+WHERE @@ROWCOUNT = 1 AND [ClienteId] = scope_identity();
+2023-03-10T07:04:56.613Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:04:57.265Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [c].[ClienteId], [c].[Nombre], [c].[Genero], [c].[Edad], [c].[Identificacion], [c].[Direccion], [c].[Telefono], [c].[Estado]
+FROM [Cliente] AS [c]
+WHERE [c].[ClienteId] = @__id_0
+2023-03-10T07:04:59.478Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:04:59.666Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (90ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cuenta] ([clienteId], [Estado], [saldoInicial], [tipo])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [numeroCuenta]
+FROM [Cuenta]
+WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T07:05:12.582Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:05:12.594Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T07:05:33.223Z [Warning] Microsoft.AspNetCore.Server.Kestrel: Overriding address(es) 'http://localhost:8432'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2023-03-10T07:05:33.275Z [Information] Microsoft.Hosting.Lifetime: Now listening on: http://0.0.0.0:8432
+2023-03-10T07:05:33.278Z [Information] Microsoft.Hosting.Lifetime: Application started. Press Ctrl+C to shut down.
+2023-03-10T07:05:33.282Z [Information] Microsoft.Hosting.Lifetime: Hosting environment: Development
+2023-03-10T07:05:33.285Z [Information] Microsoft.Hosting.Lifetime: Content root path: C:\Users\el_fr\Source\repos\AccountMovAPI\AccountMovAPI\
+2023-03-10T07:05:57.139Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:05:58.569Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (164ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T07:06:58.286Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:06:59.030Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (13ms) [Parameters=[@__numeroCuenta_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [c].[numeroCuenta], [c].[clienteId], [c].[saldoInicial], [c].[Estado]
+FROM [Cuenta] AS [c]
+WHERE [c].[numeroCuenta] = @__numeroCuenta_0
+2023-03-10T07:07:15.336Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:07:15.392Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cuenta] ([clienteId], [Estado], [saldoInicial], [tipo])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [numeroCuenta]
+FROM [Cuenta]
+WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T07:07:25.949Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:07:25.959Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cuenta] ([clienteId], [Estado], [saldoInicial], [tipo])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [numeroCuenta]
+FROM [Cuenta]
+WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T07:07:51.935Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:07:51.946Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cuenta] ([clienteId], [Estado], [saldoInicial], [tipo])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [numeroCuenta]
+FROM [Cuenta]
+WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T07:09:42.663Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:09:42.781Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (10ms) [Parameters=[@p0='?' (Size = 50) (DbType = AnsiString), @p1='?' (Size = 50) (DbType = AnsiString), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 15) (DbType = AnsiString), @p6='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p7='?' (Size = 50) (DbType = AnsiString), @p8='?' (Size = 20) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cliente] ([Contrasena], [Direccion], [Edad], [Estado], [Genero], [Identificacion], [LimiteDiario], [Nombre], [Telefono])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+SELECT [ClienteId]
+FROM [Cliente]
+WHERE @@ROWCOUNT = 1 AND [ClienteId] = scope_identity();
+2023-03-10T07:09:44.894Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:09:44.914Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [c].[ClienteId], [c].[Nombre], [c].[Genero], [c].[Edad], [c].[Identificacion], [c].[Direccion], [c].[Telefono], [c].[Estado]
+FROM [Cliente] AS [c]
+WHERE [c].[ClienteId] = @__id_0
+2023-03-10T07:09:46.990Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:09:47.002Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Cuenta] ([clienteId], [Estado], [saldoInicial], [tipo])
+VALUES (@p0, @p1, @p2, @p3);
+SELECT [numeroCuenta]
+FROM [Cuenta]
+WHERE @@ROWCOUNT = 1 AND [numeroCuenta] = scope_identity();
+2023-03-10T07:09:49.059Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:09:49.070Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T07:10:40.242Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:10:40.262Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Int32), @p2='?' (Precision = 18) (Scale = 2) (DbType = Decimal), @p3='?' (DbType = Int32), @p4='?' (Precision = 18) (Scale = 2) (DbType = Decimal)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Movimientos] ([Fecha], [numeroCuenta], [saldo], [tipo], [valor])
+VALUES (@p0, @p1, @p2, @p3, @p4);
+SELECT [id]
+FROM [Movimientos]
+WHERE @@ROWCOUNT = 1 AND [id] = scope_identity();
+2023-03-10T07:10:49.916Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:10:49.935Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (8ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [m].[id], [m].[Fecha], [m].[tipo], [m].[valor], [m].[saldo]
+FROM [Movimientos] AS [m]
+WHERE [m].[id] = @__id_0
+2023-03-10T07:11:44.319Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:11:44.606Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (50ms) [Parameters=[@__nombre_0='?' (Size = 50) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SELECT [c].[ClienteId], [c].[Nombre], [c].[Estado], [c].[Identificacion]
+FROM [Cliente] AS [c]
+WHERE (@__nombre_0 LIKE '') OR (CHARINDEX(@__nombre_0, [c].[Nombre]) > 0)
+2023-03-10T07:11:54.292Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:11:54.316Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (6ms) [Parameters=[@__nombre_0='?' (Size = 50) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SELECT [c].[ClienteId], [c].[Nombre], [c].[Estado], [c].[Identificacion]
+FROM [Cliente] AS [c]
+WHERE (@__nombre_0 LIKE '') OR (CHARINDEX(@__nombre_0, [c].[Nombre]) > 0)
+2023-03-10T07:12:20.896Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:12:20.915Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (10ms) [Parameters=[@__nombre_0='?' (Size = 50) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SELECT [c].[ClienteId], [c].[Nombre], [c].[Estado], [c].[Identificacion]
+FROM [Cliente] AS [c]
+WHERE (@__nombre_0 LIKE '') OR (CHARINDEX(@__nombre_0, [c].[Nombre]) > 0)
+2023-03-10T07:12:29.483Z [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 6.0.14 initialized 'MyContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.14' with options: None
+2023-03-10T07:12:29.531Z [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (41ms) [Parameters=[@__nombre_0='?' (Size = 50) (DbType = AnsiString)], CommandType='Text', CommandTimeout='30']
+SELECT [c].[ClienteId], [c].[Nombre], [c].[Estado], [c].[Identificacion]
+FROM [Cliente] AS [c]
+WHERE (@__nombre_0 LIKE '') OR (CHARINDEX(@__nombre_0, [c].[Nombre]) > 0)

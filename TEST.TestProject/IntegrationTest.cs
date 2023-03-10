@@ -16,10 +16,9 @@ namespace TEST.TestProject
     {
         private string server = "localhost:8432";
 
-        private int id;
-        public int ClienteId { get { return (id < 1)? 1:id; } private set { this.id = value; }
-        }
-        public int NumeroCuenta { get; private set; }
+        public int ClienteId { get; private set; } = 1;
+        
+        public int NumeroCuenta { get; private set; } = 1;
 
         [SetUp]
         public void Setup() { }
@@ -90,7 +89,7 @@ namespace TEST.TestProject
                 {
                     var cuenta = new { ClienteId = this.ClienteId, SaldoInicial = 100, Tipo = ETipoCuenta.Caja_de_ahorros };
                     var json = JsonConvert.SerializeObject(cuenta, new StringEnumConverter());
-                    Console.WriteLine("Enviando nuevo cliente");
+                    Console.WriteLine("Enviando nueva cuenta");
                     Console.WriteLine(json);
                     StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await httpClient.PostAsync($"http://{server}/api/Cuentas/", stringContent);
@@ -113,26 +112,31 @@ namespace TEST.TestProject
             }
             Assert.Fail();
         }
+
+        [Test]
         public async Task Test4_CrearMovimiento()
         {
+            var moviento = new { NumeroCuenta = this.NumeroCuenta, Tipo = ETipoMovimiento.Credito, Valor = 100 };
+            HttpStatusCode estado;
+            string content;
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var cuenta = new {NumeroCuenta=1, Tipo = ETipoMovimiento.Credito, Valor = 100 };
-                    var json = JsonConvert.SerializeObject(cuenta, new StringEnumConverter());
-                    Console.WriteLine("Enviando nuevo Movimiento");
+                    var json = JsonConvert.SerializeObject(moviento, new StringEnumConverter());
+                    Console.WriteLine("Enviando nuevo moviento");
                     Console.WriteLine(json);
                     StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await httpClient.PostAsync($"http://{server}/api/Movimientos/", stringContent);
-                    var status = response.IsSuccessStatusCode;
-                    var content = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"nuevo ID MOVIMIENTO: {content}");
-                    if (response.StatusCode == System.Net.HttpStatusCode.Created)
-                    {                 
-                        return;
-                    }
-                    
+                    content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
+                    estado = response.StatusCode;
+                }
+                if (estado == HttpStatusCode.Created)
+                {
+                    this.NumeroCuenta = Int32.Parse(content);
+                    Console.WriteLine($"nuevo Movimiento ID: {content}");
+                    return;
                 }
             }
             catch (Exception ex)

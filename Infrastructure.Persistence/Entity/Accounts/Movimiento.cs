@@ -31,7 +31,7 @@ namespace Infrastructure.Persistence.Entity.Accounts
         [Column("saldo", TypeName = "decimal(18, 2)")]
         public decimal Saldo { get; set; }
         [Column("numeroCuenta")]
-        public int? NumeroCuenta { get; set; }
+        public int NumeroCuenta { get; set; }
 
         [ForeignKey("NumeroCuenta")]
         [InverseProperty("Movimientos")]

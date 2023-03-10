@@ -7,6 +7,7 @@ using CORE.Account.Application.Interfaces;
 using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
+using CORE.Account.Helpers;
 using CORE.Account.Interfaces;
 
 namespace CORE.Account.Application
@@ -14,9 +15,12 @@ namespace CORE.Account.Application
     internal class MovimientosService : IMovimientosService
     {
         public readonly IMovimientosRepository movimientosRepository;
-        public MovimientosService(IMovimientosRepository movimientosRepository)
+        private readonly IDateTimeProvider dateTimeProvider;
+
+        public MovimientosService(IMovimientosRepository movimientosRepository, IDateTimeProvider dateTimeProvider)
         {
             this.movimientosRepository = movimientosRepository;
+            this.dateTimeProvider = dateTimeProvider;
         }
 
         #region ABM
@@ -25,7 +29,7 @@ namespace CORE.Account.Application
         {
             if (!movimiento.isValid())
                 throw new MovimientoException("Datos invalidos");
-
+            movimiento.Fecha = dateTimeProvider.GetCurrentTime();
             var nuevo = await movimientosRepository.Crear(movimiento);
 
             return nuevo;

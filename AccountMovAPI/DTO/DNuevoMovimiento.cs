@@ -12,7 +12,7 @@ namespace AccountMovAPI.DTO
 
         public MMovimiento toMovimiento()
         {
-            return new MMovimiento( Tipo, Valor);
+            return new MMovimiento(NumeroCuenta, Tipo, Valor);
         }
     }
 }
