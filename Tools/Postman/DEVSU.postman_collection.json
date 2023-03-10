@@ -1,0 +1,1297 @@
+{
+	"info": {
+		"_postman_id": "2c7978b5-91d8-4428-adfa-1bfc60bfa683",
+		"name": "DEVSU",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1277514"
+	},
+	"item": [
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Estado de cuenta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Reportes/1/estadocuenta?inicio={{FechaInicio}}&fin={{FechaFin}}",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Reportes",
+								"1",
+								"estadocuenta"
+							],
+							"query": [
+								{
+									"key": "inicio",
+									"value": "{{FechaInicio}}"
+								},
+								{
+									"key": "fin",
+									"value": "{{FechaFin}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Ejemplo",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Reportes/1/estadocuenta?inicio={{FechaInicio}}&fin={{FechaFin}}",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Reportes",
+										"1",
+										"estadocuenta"
+									],
+									"query": [
+										{
+											"key": "inicio",
+											"value": "{{FechaInicio}}"
+										},
+										{
+											"key": "fin",
+											"value": "{{FechaFin}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 09:03:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[{\"NumeroCuenta\":1,\"Saldo\":250.00,\"Debitos\":1,\"Creditos\":3},{\"NumeroCuenta\":11,\"Saldo\":100.00,\"Debitos\":0,\"Creditos\":1}]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Movimientos",
+			"item": [
+				{
+					"name": "GetMovimiento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Cuentas",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Cuentas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not found response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Movimientos/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Movimientos",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 05:29:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-98c933c3ae926458562e251682f97c56-e6c6585ab30daa10-00\"\n}"
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Movimientos/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Movimientos",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 07:10:49 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\"NumeroCuenta\":1,\"Id\":0,\"Fecha\":\"2023-03-10T03:03:51.96\",\"Tipo\":\"Credito\",\"Valor\":100.00,\"Saldo\":0.00}"
+						}
+					]
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NumeroCuenta\": 1,\r\n    \"Tipo\": \"Debito\",\r\n    \"Valor\": 50\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}/api/Movimientos",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Movimientos"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not found response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Movimientos/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Movimientos",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 05:29:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-98c933c3ae926458562e251682f97c56-e6c6585ab30daa10-00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NumeroCuenta\": 12,\r\n    \"Tipo\": \"Credito\",\r\n    \"Valor\": 100,\r\n    \"Fecha\":\"2023-03-10T03:03:51.96\",\r\n    \"Saldo\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}/api/Movimientos/1",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Movimientos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Movimientos/2",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Movimientos",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Eliminado",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Movimientos/2",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Movimientos",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 08:10:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Movimientos/2",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Movimientos",
+										"2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 08:10:48 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "No existe la cuenta 2"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "GetList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Clientes?nombre=Edwin Rojas",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Clientes"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Edwin Rojas"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lista de clientes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Clientes?nombre=Edwin Rojas",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Clientes"
+									],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "Edwin Rojas"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 04:57:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Edwin Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"45457878\"\n    }\n]"
+						},
+						{
+							"name": "Varios resultados",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Clientes?nombre=Rojas",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Clientes"
+									],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "Rojas"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 07:12:29 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"nombre\": \"Edwin Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"45457878\"\n    },\n    {\n        \"id\": 3,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"454578SC\"\n    },\n    {\n        \"id\": 9,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003015735SC\"\n    },\n    {\n        \"id\": 10,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020126SC\"\n    },\n    {\n        \"id\": 11,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020159SC\"\n    },\n    {\n        \"id\": 12,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020303SC\"\n    },\n    {\n        \"id\": 13,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020420SC\"\n    },\n    {\n        \"id\": 14,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020537SC\"\n    },\n    {\n        \"id\": 15,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020553SC\"\n    },\n    {\n        \"id\": 16,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020638SC\"\n    },\n    {\n        \"id\": 17,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003020925SC\"\n    },\n    {\n        \"id\": 18,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021058SC\"\n    },\n    {\n        \"id\": 19,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021121SC\"\n    },\n    {\n        \"id\": 20,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021212SC\"\n    },\n    {\n        \"id\": 21,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021254SC\"\n    },\n    {\n        \"id\": 22,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021316SC\"\n    },\n    {\n        \"id\": 23,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021415SC\"\n    },\n    {\n        \"id\": 24,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021431SC\"\n    },\n    {\n        \"id\": 25,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003021450SC\"\n    },\n    {\n        \"id\": 26,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003022358SC\"\n    },\n    {\n        \"id\": 27,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003022432SC\"\n    },\n    {\n        \"id\": 28,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003022724SC\"\n    },\n    {\n        \"id\": 29,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003023348SC\"\n    },\n    {\n        \"id\": 30,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003030451SC\"\n    },\n    {\n        \"id\": 31,\n        \"nombre\": \"Oscar Rojas\",\n        \"estado\": \"Activo\",\n        \"estadoCuenta\": null,\n        \"identificacion\": \"1003030940SC\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "GetCliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Clientes/1",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Clientes",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Clientes/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Clientes",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 04:57:49 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\"Id\":1,\"Contrasena\":\"\",\"Estado\":\"Activo\",\"LimiteDiario\":1000.0,\"Nombre\":\"Edwin Rojas\",\"Genero\":\"masculino\",\"Edad\":14,\"Identificacion\":\"45457878\",\"Direccion\":\"Avenida Siempre viva\",\"Telefono\":\"7451245\"}"
+						}
+					]
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 0,\r\n    \"Contrasena\": \"\",\r\n    \"Estado\": \"Inactivo\",\r\n    \"Nombre\": \"Edwin Rojas\",\r\n    \"Genero\": \"masculino\",\r\n    \"Edad\": 14,\r\n    \"Identificacion\": \"45457878\",\r\n    \"Direccion\": \"Avenida Siempre viva\",\r\n    \"Telefono\": \"7451245\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}/api/Clientes",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Clientes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Nuevo cliente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 0,\r\n    \"Contrasena\": \"123123123\",\r\n    \"Estado\": \"Inactivo\",\r\n    \"Nombre\": \"Edwin Rojas\",\r\n    \"Genero\": \"masculino\",\r\n    \"Edad\": 14,\r\n    \"Identificacion\": \"45457878\",\r\n    \"Direccion\": \"Avenida Siempre viva\",\r\n    \"Telefono\": \"7451245\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Clientes",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Clientes"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 04:42:27 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\"Id\":1,\"Contrasena\":\"f5bb0c8de146c67b44babbf4e6584cc0\",\"Estado\":\"Activo\",\"LimiteDiario\":1000.0,\"Nombre\":\"Edwin Rojas\",\"Genero\":\"masculino\",\"Edad\":14,\"Identificacion\":\"45457878\",\"Direccion\":\"Avenida Siempre viva\",\"Telefono\":\"7451245\"}"
+						}
+					]
+				},
+				{
+					"name": "Editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 0,\r\n    \"Estado\": \"Activo\",\r\n    \"Nombre\": \"Edwin Rojas\",\r\n    \"Genero\": \"masculino\",\r\n    \"Edad\": 14,\r\n    \"Identificacion\": \"45457878\",\r\n    \"Direccion\": \"Avenida Siempre viva\",\r\n    \"Telefono\": \"7451245\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}/api/Clientes",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Clientes/3",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Clientes",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Eliminado",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 0,\r\n    \"Estado\": \"Activo\",\r\n    \"Nombre\": \"Edwin Rojas\",\r\n    \"Genero\": \"masculino\",\r\n    \"Edad\": 14,\r\n    \"Identificacion\": \"45457878\",\r\n    \"Direccion\": \"Avenida Siempre viva\",\r\n    \"Telefono\": \"7451245\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Clientes/3",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Clientes",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 08:05:31 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "NotFound",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Id\": 0,\r\n    \"Estado\": \"Activo\",\r\n    \"Nombre\": \"Edwin Rojas\",\r\n    \"Genero\": \"masculino\",\r\n    \"Edad\": 14,\r\n    \"Identificacion\": \"45457878\",\r\n    \"Direccion\": \"Avenida Siempre viva\",\r\n    \"Telefono\": \"7451245\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Clientes/3",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Clientes",
+										"3"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 08:06:05 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "No existe el cliente 3"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cuentas",
+			"item": [
+				{
+					"name": "GetCuenta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Cuentas/1",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Cuentas",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 05:29:11 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\"NumeroCuenta\":1,\"Tipo\":\"Cuenta_Corriente\",\"SaldoInicial\":100.00,\"Estado\":\"Activo\",\"ClienteId\":1}"
+						}
+					]
+				},
+				{
+					"name": "Crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ClienteId\": 1,\r\n    \"SaldoInicial\": 100,\r\n    \"Tipo\": \"Caja_de_ahorros\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}/api/Cuentas",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Cuentas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Server Internal ERROR",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"SaldoInicial\": 100.0,    \r\n    \"ClienteId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/problem+json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 05:25:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.6.1\",\n    \"title\": \"An error occurred while processing your request.\",\n    \"status\": 500,\n    \"traceId\": \"00-d5b7a65a3bc8c605b3af58b831cf3685-f133e2af60a46418-00\"\n}"
+						},
+						{
+							"name": "NUeva cuenta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"SaldoInicial\": 100.0,    \r\n    \"ClienteId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 05:28:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\"NumeroCuenta\":1,\"Tipo\":\"Cuenta_Corriente\",\"SaldoInicial\":100.0,\"Estado\":\"Activo\",\"ClienteId\":1}"
+						}
+					]
+				},
+				{
+					"name": "Editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Estado\":\"inactivo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{server}}/api/Cuentas/1",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Cuentas",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Activar",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Estado\":\"activo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 07:45:01 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Desactivar",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Estado\":\"inactivo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas/1",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 07:45:57 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Estado\":\"inactivo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas/0",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas",
+										"0"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 07:46:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "No existe la cuenta 0"
+						}
+					]
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{server}}/api/Cuentas/9",
+							"protocol": "http",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"Cuentas",
+								"9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Eliminado",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas/9",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas",
+										"9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 08:07:47 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "NotFoundRequest",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{server}}/api/Cuentas/9",
+									"protocol": "http",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"api",
+										"Cuentas",
+										"9"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Mar 2023 08:08:21 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "No existe la cuenta 9"
+						}
+					]
+				}
+			]
+		}
+	]
+}
