@@ -16,7 +16,9 @@ namespace TEST.TestProject
     {
         private string server = "localhost:8432";
 
-        public int ClienteId { get; private set; }
+        private int id;
+        public int ClienteId { get { return (id < 1)? 1:id; } private set { this.id = value; }
+        }
         public int NumeroCuenta { get; private set; }
 
         [SetUp]
@@ -67,14 +69,12 @@ namespace TEST.TestProject
                 content = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(content);
                 estado = response.StatusCode;
-               
+                if (estado == HttpStatusCode.OK)
+                {                    
+                    return;
+                }
             }
-            if (estado == HttpStatusCode.OK)
-            {
-                this.NumeroCuenta = Int32.Parse(content);
-                Console.WriteLine($"nuevo NumeroCuenta: {content}");
-                return;
-            }
+           
 
             Assert.Fail();
         }
@@ -98,7 +98,7 @@ namespace TEST.TestProject
                     Console.WriteLine(content);
                     estado = response.StatusCode;
                 }
-                if (estado == HttpStatusCode.OK)
+                if (estado == HttpStatusCode.Created)
                 {
                     this.NumeroCuenta = Int32.Parse(content);
                     Console.WriteLine($"nuevo NumeroCuenta: {content}");
