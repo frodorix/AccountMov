@@ -93,6 +93,11 @@ namespace Infrastructure.Persistence.Repository
 
         public async Task<DEstadoCuenta[]> ObtenerEstadoCuenta(int clienteId, DateTime inicio, DateTime fin)
         {
+            var id = await DB.Clientes.Where(x => x.ClienteId == clienteId).Select(x => x.ClienteId).FirstOrDefaultAsync();
+            if (id < 1)
+            {
+                throw new NotFoundException($"No existe el cliente {clienteId}");
+            }
             var movimientos = await DB.Movimientos
                 .Where(m => m.Cuenta.ClienteId == clienteId && m.Fecha >= inicio && m.Fecha <= fin)
                 .GroupBy(m => m.Cuenta.NumeroCuenta)
@@ -104,6 +109,7 @@ namespace Infrastructure.Persistence.Repository
                     Creditos = g.Count(m => m.Tipo == ETipoMovimiento.Credito)
                 })
                 .ToArrayAsync();
+
             return movimientos;
         }
 

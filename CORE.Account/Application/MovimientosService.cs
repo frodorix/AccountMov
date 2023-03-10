@@ -43,6 +43,7 @@ namespace CORE.Account.Application
 
         public async Task<int> Modificar(MMovimiento movimiento)
         {
+            movimiento.Valor = (movimiento.Tipo == ETipoMovimiento.Credito) ? Math.Abs(movimiento.Valor) : (Math.Abs(movimiento.Valor) * -1);
             return await this.movimientosRepository.Modificar(movimiento);
         }
 
