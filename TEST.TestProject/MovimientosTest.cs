@@ -5,6 +5,7 @@ using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
 using CORE.Account.Helpers;
 using CORE.Account.Interfaces;
+using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 
 namespace TEST.TestProject
@@ -15,6 +16,7 @@ namespace TEST.TestProject
         private Mock<IMovimientosRepository> movimientosRepository = new Mock<IMovimientosRepository>();
         private Mock<IClientesRepository> clientesRepository = new Mock<IClientesRepository>();
         private Mock<IDateTimeProvider> dateTimeProvider = new Mock<IDateTimeProvider>();
+        private Mock<IDbContextTransaction> _transaction= new Mock<IDbContextTransaction>();
         private decimal saldoActual;
 
         [SetUp]
@@ -63,6 +65,13 @@ namespace TEST.TestProject
             clientesRepository
                 .Setup(x => x.ObtenerLimiteRetiro(clienteId))
                 .ReturnsAsync(limiteRetiros);
+
+            CancellationToken asdr = default;
+            _transaction
+                 .Setup(x => x.CommitAsync(asdr))
+                 .Returns(Task.CompletedTask);
+
+            
         }
         [Test]
         public async Task RegistrarCreditoAcuentaDeshabilitada()
@@ -82,7 +91,7 @@ namespace TEST.TestProject
                 estadoCuenta: EEstadoCuenta.Inactivo
             );
 
-            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object);
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object, _transaction.Object);
             try
             {
                 var movimiento = await cuentasService.RegistrarCredito(numeroCuenta, valorCredito);
@@ -113,7 +122,7 @@ namespace TEST.TestProject
                 estadoCuenta: EEstadoCuenta.Activo
             );
 
-            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object);
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object, _transaction.Object);
 
 
             var movimiento = cuentasService.RegistrarCredito(numeroCuenta, valorCredito);
@@ -138,7 +147,7 @@ namespace TEST.TestProject
                 estadoCuenta: EEstadoCuenta.Activo
             );
 
-            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object);
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object, _transaction.Object);
 
 
             var movimiento = await cuentasService.RegistrarDebito(numeroCuenta, valorCredito);
@@ -162,7 +171,7 @@ namespace TEST.TestProject
                 estadoCuenta: EEstadoCuenta.Activo
             );
 
-            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object);
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object, _transaction.Object);
 
             try
             {
@@ -196,7 +205,7 @@ namespace TEST.TestProject
                 totalRetiros: 950  
               );
 
-            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object);
+            ICuentasService cuentasService = new CuentasService(cuentasRepository.Object, movimientosRepository.Object, clientesRepository.Object, dateTimeProvider.Object, _transaction.Object);
 
             try
             {

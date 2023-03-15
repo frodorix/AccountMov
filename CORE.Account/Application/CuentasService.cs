@@ -4,6 +4,7 @@ using CORE.Account.Domain.Model;
 using CORE.Account.Exception;
 using CORE.Account.Helpers;
 using CORE.Account.Interfaces;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,16 @@ namespace CORE.Account.Application
         private readonly IMovimientosRepository movimientosRespository;
         private readonly IClientesRepository clientesRespository;
         private readonly IDateTimeProvider dateTimeProvider;
-        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository, IDateTimeProvider dateTimeProvider)
+        private readonly IDbContextTransaction transaction;
+
+        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository, IDateTimeProvider dateTimeProvider,  IDbContextTransaction transaction)
         {
             this.cuentasRespository = cuentasRespositor;
             this.movimientosRespository = movimientosRespository;   
             this.clientesRespository = clientesRespository;
             this.dateTimeProvider = dateTimeProvider;
-        }
+            this.transaction=transaction;
+    }
 
         #region ABM
         /// <summary>
@@ -88,11 +92,13 @@ namespace CORE.Account.Application
         /// <exception cref="CuentaException"></exception>
         public async Task<MMovimiento> RegistrarCredito(int numeroCuenta, decimal valor)
         {
+            
             var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
             var valorCredito = Math.Abs(valor);
             decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(numeroCuenta);
  
             MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
+            await this.transaction.CommitAsync();
             return movimiento;
         }
 
@@ -122,6 +128,7 @@ namespace CORE.Account.Application
             }
             #endregion
             MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Debito, valorDebito*-1, saldoActual - valorDebito);
+            await this.transaction.CommitAsync();
             return movimiento;
         }
 

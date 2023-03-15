@@ -2,6 +2,7 @@
 using Infrastructure.Persistence.Contexts;
 using Infrastructure.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Infrastructure.Persistence.Extensions
 {
@@ -26,6 +28,11 @@ namespace Infrastructure.Persistence.Extensions
             services.AddTransient<IClientesRepository, ClientesRepository>();
             services.AddTransient<ICuentasRepository, CuentasRepository>();
             services.AddTransient<IMovimientosRepository, MovimientosRepository>();
+
+            services.AddScoped<IDbContextTransaction>(provider =>
+                provider.GetService<MyContext>().Database.BeginTransaction()
+            );
+
 
 
             return services;
