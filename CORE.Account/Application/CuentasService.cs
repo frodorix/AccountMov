@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Account.Application
 {
-    public  class CuentasService : ICuentasService
+    public class CuentasService : ICuentasService
     {
 
         private readonly ICuentasRepository cuentasRespository;
@@ -22,14 +22,14 @@ namespace CORE.Account.Application
         private readonly IDateTimeProvider dateTimeProvider;
         private readonly IDbContextTransaction transaction;
 
-        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository, IDateTimeProvider dateTimeProvider,  IDbContextTransaction transaction)
+        public CuentasService(ICuentasRepository cuentasRespositor, IMovimientosRepository movimientosRespository, IClientesRepository clientesRespository, IDateTimeProvider dateTimeProvider, IDbContextTransaction transaction)
         {
             this.cuentasRespository = cuentasRespositor;
-            this.movimientosRespository = movimientosRespository;   
+            this.movimientosRespository = movimientosRespository;
             this.clientesRespository = clientesRespository;
             this.dateTimeProvider = dateTimeProvider;
-            this.transaction=transaction;
-    }
+            this.transaction = transaction;
+        }
 
         #region ABM
         /// <summary>
@@ -41,22 +41,25 @@ namespace CORE.Account.Application
         public async Task<MCuenta> Crear(MCuenta cuenta)
         {
             if (!cuenta.isValid())
-                throw new CuentaException("Datos invalidos");            
+                throw new CuentaException("Datos invalidos");
 
             var nuevo = await cuentasRespository.Crear(cuenta);
-
+            await this.transaction.CommitAsync();
             return nuevo;
         }
 
         public async Task<int> Eliminar(int clienteId)
         {
             int eliminados = await this.cuentasRespository.Eliminar(clienteId);
+            await this.transaction.CommitAsync();
             return eliminados;
         }
 
-        public async Task<int> Modificar(int id  , EEstadoCuenta estado)
+        public async Task<int> Modificar(int id, EEstadoCuenta estado)
         {
-            return await this.cuentasRespository.Modificar(id, estado);
+            var response = await this.cuentasRespository.Modificar(id, estado);
+            await this.transaction.CommitAsync();
+            return response;
         }
         #endregion
 
@@ -92,14 +95,21 @@ namespace CORE.Account.Application
         /// <exception cref="CuentaException"></exception>
         public async Task<MMovimiento> RegistrarCredito(int numeroCuenta, decimal valor)
         {
-            
-            var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
-            var valorCredito = Math.Abs(valor);
-            decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(numeroCuenta);
- 
-            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
-            await this.transaction.CommitAsync();
-            return movimiento;
+            try
+            {
+                var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
+                var valorCredito = Math.Abs(valor);
+                decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(numeroCuenta);
+
+                MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Credito, valorCredito, saldoActual + valorCredito);
+                await this.transaction.CommitAsync();
+                return movimiento;
+            }
+            catch (System.Exception)
+            {
+                await this.transaction.RollbackAsync();
+                throw;
+            }
         }
 
         /// <summary>
@@ -112,25 +122,34 @@ namespace CORE.Account.Application
         /// <exception cref="CuentaException"></exception>
         public async Task<MMovimiento> RegistrarDebito(int numeroCuenta, decimal valor)
         {
-            var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
-            var valorDebito = Math.Abs(valor) ;
-            decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(cuenta.NumeroCuenta);
-            #region validacion de saldo
-            if (saldoActual - valorDebito < 0)//no se debe permitr debito en saldo 0
+            try
             {
-                throw new CuentaException("Saldo no disponible");
+                var cuenta = await this.ValidarEstadoCuenta(numeroCuenta);
+                var valorDebito = Math.Abs(valor);
+                decimal saldoActual = await this.cuentasRespository.ObtenerSaldoCuenta(cuenta.NumeroCuenta);
+                #region validacion de saldo
+                if (saldoActual - valorDebito < 0)//no se debe permitr debito en saldo 0
+                {
+                    throw new CuentaException("Saldo no disponible");
+                }
+                decimal limite = await this.clientesRespository.ObtenerLimiteRetiro(cuenta.ClienteId);
+                decimal totalRetiros = await this.movimientosRespository.ObtenerTotalRetiros(cuenta.ClienteId, dateTimeProvider.GetCurrentTime());
+                if (totalRetiros + valorDebito > limite)
+                {
+                    throw new CuentaException("Cupo diario Excedido");
+                }
+                #endregion
+                MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Debito, valorDebito * -1, saldoActual - valorDebito);
+                await this.transaction.CommitAsync();
+                return movimiento;
             }
-            decimal limite = await this.clientesRespository.ObtenerLimiteRetiro(cuenta.ClienteId);
-            decimal totalRetiros = await this.movimientosRespository.ObtenerTotalRetiros(cuenta.ClienteId, dateTimeProvider.GetCurrentTime());
-            if (totalRetiros + valorDebito > limite)
+            catch (System.Exception)
             {
-                throw new CuentaException("Cupo diario Excedido");
+                await this.transaction.RollbackAsync();
+                throw;
             }
-            #endregion
-            MMovimiento movimiento = await this.movimientosRespository.RegistrarMovimiento(cuenta.NumeroCuenta, fecha: dateTimeProvider.GetCurrentTime(), ETipoMovimiento.Debito, valorDebito*-1, saldoActual - valorDebito);
-            await this.transaction.CommitAsync();
-            return movimiento;
         }
+
 
         public async Task<MCuenta> ObtenerPorId(int id)
         {
