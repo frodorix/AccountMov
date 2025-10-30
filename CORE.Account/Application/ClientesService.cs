@@ -1,15 +1,10 @@
 ﻿using CORE.Account.Application.Interfaces;
+using CORE.Account.Application.Services;
 using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
 using CORE.Account.Exception;
 using CORE.Account.Helpers;
 using CORE.Account.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CORE.Account.Application
 {
@@ -17,24 +12,31 @@ namespace CORE.Account.Application
     {
         private readonly IDateTimeProvider dateTimeProvider;
         private readonly IClientesRepository clientesRespository;
-        public ClientesService(IClientesRepository clientesRespository, IDateTimeProvider dateTimeProvider)
+        private readonly IPasswordHashingService passwordHashingService;
+
+        public ClientesService(
+            IClientesRepository clientesRespository, 
+            IDateTimeProvider dateTimeProvider,
+            IPasswordHashingService passwordHashingService)
         {
             this.clientesRespository = clientesRespository;
-            this.dateTimeProvider = dateTimeProvider;   
+            this.dateTimeProvider = dateTimeProvider;
+            this.passwordHashingService = passwordHashingService;
         }
+
         #region ABM
         /// <summary>
-        /// 
+        /// Creates a new client with hashed password.
         /// </summary>
-        /// <param name="cliente"></param>
-        /// <returns></returns>
-        /// <exception cref="ClienteException"></exception>
+        /// <param name="cliente">Client data</param>
+        /// <returns>Created client</returns>
+        /// <exception cref="ClienteException">Thrown when client data is invalid</exception>
         public async Task<MCliente> Crear(MCliente cliente)
         {
             if (!cliente.isValid())
                 throw new ClienteException("Datos invalidos");
 
-            cliente.Contrasena = ClientesHelpers.Cifrar(cliente.Contrasena);
+            cliente.Contrasena = passwordHashingService.HashPassword(cliente.Contrasena);
 
             var nuevo = await clientesRespository.Crear(cliente);
 
