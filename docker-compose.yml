@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    build:
+      context: ./Tools/MSSql
+      dockerfile: Dockerfile
     container_name: frodorix-sqlserver
     environment:
       - ACCEPT_EULA=Y
@@ -15,10 +17,11 @@ services:
     networks:
       - frodorix-account-network
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P yourStrongPassword# -Q 'SELECT 1' -C || exit 1"]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P yourStrongPassword# -Q 'SELECT 1' || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 30s
 
   api:
     build:
@@ -27,7 +30,7 @@ services:
     container_name: frodorix-account-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Data Source=sqlserver;Initial Catalog=AccountMovs;Persist Security Info=True;User ID=sa;Password=yourStrongPassword#;TrustServerCertificate=True
+      - ConnectionStrings__AccountsDB=Data Source=sqlserver;Initial Catalog=AccountMovs;Persist Security Info=True;User ID=sa;Password=yourStrongPassword#;TrustServerCertificate=True
     ports:
       - "8432:80"
     depends_on:
