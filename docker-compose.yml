@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    build:
+      context: ./Tools/MSSql
+      dockerfile: Dockerfile
+      args:
+        - SA_PASSWORD=${SA_PASSWORD:-yourStrongPassword#}
+    container_name: frodorix-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD:-yourStrongPassword#}
+      - MSSQL_PID=${MSSQL_PID:-Developer}
+    ports:
+      - "8433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - frodorix-account-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"${SA_PASSWORD:-yourStrongPassword#}\" -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  api:
+    build:
+      context: .
+      dockerfile: AccountMovAPI/Dockerfile
+    container_name: frodorix-account-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
+      - ConnectionStrings__AccountsDB=Data Source=${DB_SERVER:-sqlserver};Initial Catalog=${DB_NAME:-AccountMovs};Persist Security Info=True;User ID=sa;Password=${SA_PASSWORD:-yourStrongPassword#};TrustServerCertificate=True
+    ports:
+      - "8432:80"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - frodorix-account-network
+
+networks:
+  frodorix-account-network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:

@@ -1,5 +1,4 @@
-﻿using CORE.Account.Domain.Enum;
-using CORE.Account.Domain.Model;
+﻿using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
 
 namespace CORE.Account.Application.Interfaces
@@ -13,7 +12,7 @@ namespace CORE.Account.Application.Interfaces
         Task<MCliente> Crear(MCliente cliente);
         Task<int> Modificar(MCliente cliente);
         Task<int> Eliminar(int id);
-        Task<MCliente> ObtenerPorId(int id);
+        Task<MCliente?> ObtenerPorId(int id);
         #endregion
     }
 }

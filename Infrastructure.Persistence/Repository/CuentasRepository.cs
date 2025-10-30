@@ -1,37 +1,27 @@
 ﻿using AutoMapper;
 using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
-using CORE.Account.DTO;
 using CORE.Account.Exception;
 using CORE.Account.Interfaces;
 using Infrastructure.Persistence.Contexts;
 using Infrastructure.Persistence.Entity.Accounts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repository
 {
     internal class CuentasRepository : Repository<Cuenta>, ICuentasRepository
     {
-        public CuentasRepository(MyContext contex) : base(contex)
+        private readonly IMapper _mapper;
+
+        public CuentasRepository(MyContext context, IMapper mapper) : base(context)
         {
+            _mapper = mapper;
         }
 
         #region ABM - CRUD
         public async Task<MCuenta> Crear(MCuenta cuenta)
         {
-            MapperConfiguration config;
-            config = new MapperConfiguration(cfg => {
-
-                cfg.CreateMap<MCuenta, Cuenta>()
-                    .ForMember(dest => dest.NumeroCuenta, opt => opt.Ignore()); ;
-            });
-            var mapper = new Mapper(config);
-            var entidad = mapper.Map<Cuenta>(cuenta);
+            var entidad = _mapper.Map<Cuenta>(cuenta);
 
             DB.Cuenta.Add(entidad);
             _ = await DB.SaveChangesAsync();
@@ -64,6 +54,7 @@ namespace Infrastructure.Persistence.Repository
         }
 
         #endregion
+
         public async Task<MCuenta> ObtenerCuenta(int numeroCuenta)
         {
             return await DB.Cuenta
@@ -72,7 +63,7 @@ namespace Infrastructure.Persistence.Repository
                 .FirstAsync();
         }
 
-        public async Task<MCuenta> ObtenerPorId(int numeroCuenta)
+        public async Task<MCuenta?> ObtenerPorId(int numeroCuenta)
         {
             var res = await this.DB.Cuenta
                           .Where(x => x.NumeroCuenta== numeroCuenta)
@@ -87,9 +78,6 @@ namespace Infrastructure.Persistence.Repository
                 .Where(x => x.NumeroCuenta == numeroCuenta)
                 .SumAsync(x => x.Valor);
             return saldo;
-
         }
-
-        
     }
 }

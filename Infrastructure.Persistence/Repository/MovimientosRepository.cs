@@ -6,39 +6,27 @@ using CORE.Account.Interfaces;
 using Infrastructure.Persistence.Contexts;
 using Infrastructure.Persistence.Entity.Accounts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repository
 {
     internal class MovimientosRepository : Repository<Movimiento>, IMovimientosRepository
     {
-        public MovimientosRepository(MyContext contex) : base(contex)
+        private readonly IMapper _mapper;
+
+        public MovimientosRepository(MyContext context, IMapper mapper) : base(context)
         {
+            _mapper = mapper;
         }
+
         #region ABM - CRUD
         public async Task<MMovimiento> Crear(MMovimiento movimiento)
         {
-            MapperConfiguration config;
-            config = new MapperConfiguration(cfg => {
-
-                cfg.CreateMap<MMovimiento, Movimiento>()
-                    .ForMember(dest => dest.Cuenta, opt => opt.Ignore())
-                    .ForMember(dest => dest.Id, opt => opt.Ignore())
-                    ;
-            });
-            var mapper = new Mapper(config);
-            var entidad = mapper.Map<Movimiento>(movimiento);
+            var entidad = _mapper.Map<Movimiento>(movimiento);
             
-           
             DB.Movimientos.Add(entidad);
             _ = await DB.SaveChangesAsync();
             movimiento.Id = entidad.Id;
             return movimiento;
-           
         }
 
         public async Task<int> Eliminar(int movimientoId)
@@ -69,7 +57,7 @@ namespace Infrastructure.Persistence.Repository
             return modificados;
         }
 
-        public async Task<MMovimiento> ObtenerPorId(int id)
+        public async Task<MMovimiento?> ObtenerPorId(int id)
         {
             var res = await this.DB.Movimientos
                          .Where(x => x.Id == id)
@@ -78,9 +66,10 @@ namespace Infrastructure.Persistence.Repository
             return res;
         }
         #endregion
+
         public async Task<decimal> ObtenerTotalRetiros(int clienteId, DateTime fecha)
         {
-            decimal total = await  DB.Movimientos
+            decimal total = await DB.Movimientos
                         .Where(m => m.Fecha.Date == fecha.Date)
                         .SumAsync(m => m.Valor);
             return total;
@@ -92,13 +81,7 @@ namespace Infrastructure.Persistence.Repository
             this.Add(movimiento);
             await DB.SaveChangesAsync();
 
-            MapperConfiguration config;
-            config = new MapperConfiguration(cfg =>
-            {
-            });
-
-            var mapper = new Mapper(config);
-            var result = mapper.Map<MMovimiento>(movimiento);
+            var result = _mapper.Map<MMovimiento>(movimiento);
 
             return result;
         }

@@ -8,7 +8,7 @@ namespace CORE.Account.Application.Interfaces
         Task<MMovimiento> Crear(MMovimiento obj);
         Task<int> Modificar(MMovimiento obj);
         Task<int> Eliminar(int id);
-        Task<MMovimiento> ObtenerPorId(int id);
+        Task<MMovimiento?> ObtenerPorId(int id);
         #endregion
     }
 }

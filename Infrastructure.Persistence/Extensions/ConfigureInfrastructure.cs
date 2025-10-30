@@ -1,39 +1,35 @@
-﻿using CORE.Account.Interfaces;
+﻿using AutoMapper;
+using CORE.Account.Interfaces;
 using Infrastructure.Persistence.Contexts;
+using Infrastructure.Persistence.Mapping;
 using Infrastructure.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Infrastructure.Persistence.Extensions
 {
     public static class ConfigureInfrastructure
     {
-
-        public static IServiceCollection UseInfrastructurePersistence(this IServiceCollection services, IConfiguration config )
+        public static IServiceCollection UseInfrastructurePersistence(this IServiceCollection services, IConfiguration config)
         {
+            var connectionString = config.GetConnectionString("AccountsDB") 
+                ?? throw new InvalidOperationException("Connection string 'AccountsDB' not found.");
 
             services.AddDbContext<MyContext>(opt =>
             {
-                opt.UseSqlServer(config.GetConnectionString("AccountsDB"));
+                opt.UseSqlServer(connectionString);
             });
 
-            services.AddTransient<IClientesRepository, ClientesRepository>();
-            services.AddTransient<ICuentasRepository, CuentasRepository>();
-            services.AddTransient<IMovimientosRepository, MovimientosRepository>();
+            // Configure AutoMapper once as a singleton for better performance
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<EntityToModelProfile>();
+            });
 
-            services.AddScoped<IDbContextTransaction>(provider =>
-                provider.GetService<MyContext>().Database.BeginTransaction()
-            );
-
-
+            services.AddScoped<IClientesRepository, ClientesRepository>();
+            services.AddScoped<ICuentasRepository, CuentasRepository>();
+            services.AddScoped<IMovimientosRepository, MovimientosRepository>();
 
             return services;
         }
