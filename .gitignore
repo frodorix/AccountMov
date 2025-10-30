@@ -362,3 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /AccountMovAPI/logs.txt
+
+# Environment variables with secrets
+.env
+.env.local
+.env.*.local

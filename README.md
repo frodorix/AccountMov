@@ -41,6 +41,14 @@ El proyecto sigue Clean Architecture con separación clara de responsabilidades:
 ## Configuración con Docker Compose
 
 ### Inicio rápido
+1. Copia el archivo de ejemplo de variables de entorno:
+```bash
+cp .env.example .env
+```
+
+2. Edita el archivo `.env` y actualiza las contraseñas según sea necesario
+
+3. Inicia los servicios:
 ```bash
 docker-compose up -d
 ```
@@ -48,6 +56,8 @@ docker-compose up -d
 Esto iniciará:
 - SQL Server en el puerto 8433
 - API en el puerto 8432
+
+**Nota de Seguridad**: Nunca commits el archivo `.env` al repositorio. El archivo `.env.example` proporciona una plantilla segura.
 
 ### Configuración manual (alternativa)
 

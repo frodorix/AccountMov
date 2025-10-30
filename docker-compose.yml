@@ -5,11 +5,13 @@ services:
     build:
       context: ./Tools/MSSql
       dockerfile: Dockerfile
+      args:
+        - SA_PASSWORD=${SA_PASSWORD:-yourStrongPassword#}
     container_name: frodorix-sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=yourStrongPassword#
-      - MSSQL_PID=Developer
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD:-yourStrongPassword#}
+      - MSSQL_PID=${MSSQL_PID:-Developer}
     ports:
       - "8433:1433"
     volumes:
@@ -17,7 +19,7 @@ services:
     networks:
       - frodorix-account-network
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P yourStrongPassword# -Q 'SELECT 1' || exit 1"]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -Q 'SELECT 1' || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -29,8 +31,8 @@ services:
       dockerfile: AccountMovAPI/Dockerfile
     container_name: frodorix-account-api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__AccountsDB=Data Source=sqlserver;Initial Catalog=AccountMovs;Persist Security Info=True;User ID=sa;Password=yourStrongPassword#;TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
+      - ConnectionStrings__AccountsDB=Data Source=${DB_SERVER:-sqlserver};Initial Catalog=${DB_NAME:-AccountMovs};Persist Security Info=True;User ID=sa;Password=${SA_PASSWORD:-yourStrongPassword#};TrustServerCertificate=True
     ports:
       - "8432:80"
     depends_on:
