@@ -57,7 +57,7 @@ namespace Infrastructure.Persistence.Repository
             return modificados;
         }
 
-        public async Task<MMovimiento> ObtenerPorId(int id)
+        public async Task<MMovimiento?> ObtenerPorId(int id)
         {
             var res = await this.DB.Movimientos
                          .Where(x => x.Id == id)

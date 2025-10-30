@@ -1,10 +1,5 @@
 ﻿using CORE.Account.Domain.Enum;
 using CORE.Account.Domain.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CORE.Account.Interfaces
 {
@@ -16,7 +11,7 @@ namespace CORE.Account.Interfaces
         Task<MMovimiento> Crear(MMovimiento movimiento);
         Task<int> Eliminar(int movimientoId);
         Task<int> Modificar(MMovimiento movimiento);
-        Task<MMovimiento> ObtenerPorId(int id);
+        Task<MMovimiento?> ObtenerPorId(int id);
         #endregion
     }
 }

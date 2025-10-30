@@ -47,7 +47,7 @@ namespace CORE.Account.Application
             return await this.movimientosRepository.Modificar(movimiento);
         }
 
-        public async Task<MMovimiento> ObtenerPorId(int id)
+        public async Task<MMovimiento?> ObtenerPorId(int id)
         {
             return await this.movimientosRepository.ObtenerPorId(id);
         }

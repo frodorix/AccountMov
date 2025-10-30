@@ -39,7 +39,7 @@ namespace Infrastructure.Persistence.Repository
             return _dbContext.Set<TEntity>().ToList();
         }
 
-        public async Task<TEntity> GetById(int id)
+        public async Task<TEntity?> GetById(int id)
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
@@ -53,7 +53,5 @@ namespace Infrastructure.Persistence.Repository
         {
             _dbContext.Set<TEntity>().RemoveRange(entities);
         }
-
-       
     }
 }

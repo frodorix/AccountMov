@@ -66,7 +66,7 @@ namespace CORE.Account.Application
             return estadoCuenta;
         }
 
-        public async Task<MCliente> ObtenerPorId(int id)
+        public async Task<MCliente?> ObtenerPorId(int id)
         {
             return await this.clientesRespository.ObtenerPorId(id);
         }

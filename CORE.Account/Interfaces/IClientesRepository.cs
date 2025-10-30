@@ -1,11 +1,5 @@
-﻿using CORE.Account.Application.Interfaces;
-using CORE.Account.Domain.Model;
+﻿using CORE.Account.Domain.Model;
 using CORE.Account.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CORE.Account.Interfaces
 {
@@ -20,7 +14,7 @@ namespace CORE.Account.Interfaces
         Task<MCliente> Crear(MCliente cliente);
         Task<int> Modificar(MCliente cliente);
         Task<int> Eliminar(int clienteId);
-        Task<MCliente> ObtenerPorId(int id);
+        Task<MCliente?> ObtenerPorId(int id);
         #endregion
     }
 }

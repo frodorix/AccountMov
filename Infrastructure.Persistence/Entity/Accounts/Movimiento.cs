@@ -9,7 +9,11 @@ namespace Infrastructure.Persistence.Entity.Accounts
 {
     public partial class Movimiento
     {
-        public Movimiento() { }
+        public Movimiento() 
+        { 
+            Cuenta = null!; // Will be set by EF Core
+        }
+
         public Movimiento(int numeroCuenta, DateTime fecha, ETipoMovimiento tipo, decimal valor, decimal saldo)
         {
             NumeroCuenta = numeroCuenta;
@@ -17,6 +21,7 @@ namespace Infrastructure.Persistence.Entity.Accounts
             Tipo = tipo;
             Valor = valor;
             Saldo = saldo;
+            Cuenta = null!; // Will be set by EF Core
         }
 
         [Key]

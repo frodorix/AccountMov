@@ -63,7 +63,7 @@ namespace Infrastructure.Persistence.Repository
                 .FirstAsync();
         }
 
-        public async Task<MCuenta> ObtenerPorId(int numeroCuenta)
+        public async Task<MCuenta?> ObtenerPorId(int numeroCuenta)
         {
             var res = await this.DB.Cuenta
                           .Where(x => x.NumeroCuenta== numeroCuenta)

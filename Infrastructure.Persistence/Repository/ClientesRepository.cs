@@ -107,7 +107,7 @@ namespace Infrastructure.Persistence.Repository
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<MCliente> ObtenerPorId(int id)
+        public async Task<MCliente?> ObtenerPorId(int id)
         {
              var res = await this.DB.Clientes
                 .Where(x => x.ClienteId == id)
